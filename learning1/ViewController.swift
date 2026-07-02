@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     let label = UILabel() //创建显示文本
     let button = UIButton()  //创建按钮
     let imageView = UIImageView()  //创建图片
+    let textField = UITextField()  //创建单行输入框
     
     @objc func buttonClick() {  //点击按钮方法实现
         print("按钮被点击")
@@ -63,6 +64,7 @@ class ViewController: UIViewController {
             make.height.equalTo(100)
         }
         
+        //图片
         
         imageView.image = UIImage(named: "Image") //设置图片
         imageView.contentMode = .scaleAspectFill //配置属性
@@ -77,6 +79,22 @@ class ViewController: UIViewController {
         }
         
         imageView.layer.cornerRadius = 50 //圆形头像
+        
+        //单行输入框
+        textField.placeholder = "请输入用户名"  //配置属性
+        textField.font = .systemFont(ofSize: 14)
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = .default  //键盘类型
+        textField.returnKeyType = .done
+        
+        view.addSubview(textField)
+
+        textField.snp.makeConstraints { make in  //布局
+            make.centerX.equalToSuperview()
+            make.top.equalTo(imageView.snp.bottom).offset(40)
+            make.width.equalTo(250)
+            make.height.equalTo(40)
+        }
 
     }
 }
