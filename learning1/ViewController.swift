@@ -9,13 +9,15 @@ import UIKit
 
 import SnapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController , UITableViewDataSource {
     
     let label = UILabel() //创建显示文本
     let button = UIButton()  //创建按钮
     let imageView = UIImageView()  //创建图片
     let textField = UITextField()  //创建单行输入框
     let textView = UITextView() //创建多行输入框
+    let tableView = UITableView()
+    let data = ["Apple", "Banana", "Orange", "Watermelon"]
     
     @objc func buttonClick() {  //点击按钮方法实现
         print("按钮被点击")
@@ -112,10 +114,36 @@ class ViewController: UIViewController {
         textView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(textField.snp.bottom).offset(40)
-              make.width.equalTo(300)
-              make.height.equalTo(100)
+            make.width.equalTo(300)
+            make.height.equalTo(50)
         }
+        
+        //列表
+        view.backgroundColor = .white
 
+        view.addSubview(tableView)
+
+        tableView.snp.makeConstraints { make in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(textView.snp.bottom).offset(40)
+            make.width.equalTo(300)
+            make.height.equalTo(100)
+        }
+        
+        tableView.dataSource = self  // 设置数据源
+
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // 注册数据源
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return data.count
+    }
+
+    func tableView(_ tableView: UITableView,
+            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.textLabel?.text = data[indexPath.row]
+        return cell
     }
 }
 
