@@ -30,8 +30,8 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         setupImageView()
         setupTextField()
         setupTextView()
-        setupTableView()
-        setupCollectionView()
+        //setupTableView()
+        //setupCollectionView()
     }
     
     //文本显示
