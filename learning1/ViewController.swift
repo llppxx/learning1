@@ -9,15 +9,17 @@ import UIKit
 
 import SnapKit
 
-class ViewController: UIViewController , UITableViewDataSource {
+class ViewController: UIViewController , UITableViewDataSource , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     let label = UILabel() //创建显示文本
     let button = UIButton()  //创建按钮
     let imageView = UIImageView()  //创建图片
     let textField = UITextField()  //创建单行输入框
     let textView = UITextView() //创建多行输入框
-    let tableView = UITableView()
-    let data = ["Apple", "Banana", "Orange", "Watermelon"]
+    let tableView = UITableView() //创建列表
+    var collectionView: UICollectionView! //创建高级布局
+    let data = ["🍎", "🍌", "🍇", "🍉", "🍓", "🍍"] //数据
+    
     
     @objc func buttonClick() {  //点击按钮方法实现
         print("按钮被点击")
@@ -25,12 +27,14 @@ class ViewController: UIViewController , UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        
         //显示文本
         
         // 1. 配置属性
         label.text = "第一个显示文本哈哈哈哈哈"
         label.textColor = .black
-        label.font = .systemFont(ofSize: 50)
+        label.font = .systemFont(ofSize: 30)
         label.numberOfLines = 0  //与宽度配合使用
         label.textAlignment = .center
         
@@ -40,7 +44,7 @@ class ViewController: UIViewController , UITableViewDataSource {
         // 3. 布局
         label.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)    //顶部等于安全距离（状态栏），再向下偏移20
-            make.width.equalTo(300)   //宽度约束，如果不约束宽度，不会换行
+            make.width.equalTo(500)   //宽度约束，如果不约束宽度，不会换行
             make.centerX.equalToSuperview()
         }
         
@@ -64,7 +68,7 @@ class ViewController: UIViewController , UITableViewDataSource {
             make.centerX.equalToSuperview()
             make.top.equalTo(label.snp.bottom).offset(40)
             make.width.equalTo(200)
-            make.height.equalTo(100)
+            make.height.equalTo(50)
         }
         
         //图片
@@ -119,7 +123,6 @@ class ViewController: UIViewController , UITableViewDataSource {
         }
         
         //列表
-        view.backgroundColor = .white
 
         view.addSubview(tableView)
 
@@ -127,12 +130,34 @@ class ViewController: UIViewController , UITableViewDataSource {
             make.centerX.equalToSuperview()
             make.top.equalTo(textView.snp.bottom).offset(40)
             make.width.equalTo(300)
-            make.height.equalTo(100)
+            make.height.equalTo(50)
         }
         
         tableView.dataSource = self  // 设置数据源
 
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // 注册数据源
+        
+        
+        //高级布局
+        let layout = UICollectionViewFlowLayout() //控制每个格子大小、间距
+        layout.itemSize = CGSize(width: 100, height: 100)
+        layout.minimumLineSpacing = 10
+        layout.minimumInteritemSpacing = 10
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        
+        collectionView.backgroundColor = .white
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")//告诉系统要用这个cell
+        
+        view.addSubview(collectionView)
+        
+        collectionView.snp.makeConstraints { make in make.centerX.equalToSuperview()
+            make.top.equalTo(tableView.snp.bottom).offset(40)
+            make.width.equalTo(300)
+            make.height.equalTo(500)
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -145,6 +170,23 @@ class ViewController: UIViewController , UITableViewDataSource {
         cell.textLabel?.text = data[indexPath.row]
         return cell
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+            return data.count
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)  //复用cell，不用重复创建
+        cell.backgroundColor = .systemBlue
+        return cell
+    }
+
+    // 点击
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+            print("点击：\(data[indexPath.item])")
+
+        }
+    
 }
 
 #if canImport(SwiftUI)
