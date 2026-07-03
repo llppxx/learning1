@@ -20,17 +20,22 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     var collectionView: UICollectionView! //创建高级布局
     let data = ["🍎", "🍌", "🍇", "🍉", "🍓", "🍍"] //数据
     
-    
-    @objc func buttonClick() {  //点击按钮方法实现
-        print("按钮被点击")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
         //显示文本
-        
+        setupLabel()
+        setupButton()
+        setupImageView()
+        setupTextField()
+        setupTextView()
+        setupTableView()
+        setupCollectionView()
+    }
+    
+    //文本显示
+    private func setupLabel(){
         // 1. 配置属性
         label.text = "第一个显示文本哈哈哈哈哈"
         label.textColor = .black
@@ -47,10 +52,14 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
             make.width.equalTo(500)   //宽度约束，如果不约束宽度，不会换行
             make.centerX.equalToSuperview()
         }
-        
-        
-        //按钮
-        
+    }
+    
+    
+    //按钮
+    @objc func buttonClick() {  //点击按钮方法实现
+        print("按钮被点击")
+    }
+    private func setupButton(){
         //属性
         button.setTitle("点我有惊喜", for: .normal)
         button.setTitleColor(.white, for: .normal)
@@ -70,9 +79,10 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
             make.width.equalTo(200)
             make.height.equalTo(50)
         }
-        
-        //图片
-        
+    }
+    
+    //图片显示
+    private func setupImageView(){
         imageView.image = UIImage(named: "Image") //设置图片
         imageView.contentMode = .scaleAspectFill //配置属性
         imageView.clipsToBounds = true
@@ -86,8 +96,10 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         }
         
         imageView.layer.cornerRadius = 50 //圆形头像
-        
-        //单行输入框
+    }
+    
+    //单行输入框
+    private func setupTextField(){
         textField.placeholder = "请输入用户名"  //配置属性
         textField.font = .systemFont(ofSize: 14)
         textField.borderStyle = .roundedRect
@@ -102,6 +114,11 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
             make.width.equalTo(250)
             make.height.equalTo(40)
         }
+    }
+    
+    
+    //多行输入框
+    private func setupTextView(){
         
         //多行输入框
         textView.text = "请输入你的个人简介"
@@ -121,9 +138,11 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
             make.width.equalTo(300)
             make.height.equalTo(50)
         }
-        
-        //列表
-
+    }
+    
+    
+    //列表
+    private func setupTableView(){
         view.addSubview(tableView)
 
         tableView.snp.makeConstraints { make in
@@ -135,10 +154,22 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         
         tableView.dataSource = self  // 设置数据源
 
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // 注册数据源
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tableCell") // 注册数据源
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+            return data.count
+    }
+    func tableView(_ tableView: UITableView,
+            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
+        cell.textLabel?.text = data[indexPath.row]
+        return cell
+    }
+    
+    
+    //高级布局
+    private func setupCollectionView(){
         
-        
-        //高级布局
         let layout = UICollectionViewFlowLayout() //控制每个格子大小、间距
         layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
@@ -148,7 +179,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")//告诉系统要用这个cell
+        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")//告诉系统要用这个cell
         
         view.addSubview(collectionView)
         
@@ -159,28 +190,14 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         }
         
     }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return data.count
-    }
-
-    func tableView(_ tableView: UITableView,
-            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        return cell
-    }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
             return data.count
     }
-
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)  //复用cell，不用重复创建
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)  //复用cell，不用重复创建
         cell.backgroundColor = .systemBlue
         return cell
     }
-
     // 点击
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
             print("点击：\(data[indexPath.item])")
