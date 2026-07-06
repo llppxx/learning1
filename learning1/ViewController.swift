@@ -124,7 +124,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         
         //显示文本
         setupLabel()
-        //setupButton()
+        setupButton()
         //setupImageView()
         //setupTextField()
         //setupTextView()
@@ -154,26 +154,26 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     
     
     //按钮
-    @objc func buttonClick() {  //点击按钮方法实现
-        print("按钮被点击")
+    @objc func goSecond() {
+        let vc = SecondViewController()
+        navigationController?.pushViewController(vc, animated: true)
+        print("navigationController =", navigationController as Any)
+    
     }
-    private func setupButton(){
-        //属性
-        button.setTitle("点我有惊喜", for: .normal)
+    private func setupButton() {
+
+        button.setTitle("去第二页", for: .normal)
         button.setTitleColor(.white, for: .normal)
         button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10  //设置圆角
-        button.clipsToBounds = true
-        
-        //交互函数
-        button.addTarget(self, action: #selector(buttonClick), for: .touchUpInside)  //点击事件交互
-        
-        //加入视图
+        button.layer.cornerRadius = 10
+
+        button.addTarget(self, action: #selector(goSecond), for: .touchUpInside)
+
         view.addSubview(button)
-        
+
         button.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(label.snp.bottom).offset(40)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
             make.width.equalTo(200)
             make.height.equalTo(50)
         }
@@ -297,7 +297,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in make.centerX.equalToSuperview()
-            make.top.equalTo(label.snp.bottom).offset(40)
+            make.top.equalTo(button.snp.bottom).offset(40)
             make.width.equalTo(300)
             make.height.equalTo(500)
         }
