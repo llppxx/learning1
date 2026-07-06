@@ -13,11 +13,18 @@ class SecondViewController: UIViewController {
     let backgroundImageView = UIImageView()
     let cardView = UIView()
     let avatar = UIImageView()
+<<<<<<< HEAD
     //let nameLabel = UILabel()
     let phoneLabel = UILabel()
     let followButton = UIButton()
     let introLabel = UILabel()
     let nameField = UITextField()
+=======
+    let nameLabel = UILabel()
+    let phoneLabel = UILabel()
+    let followButton = UIButton()
+    let introLabel = UILabel()
+>>>>>>> b66ed6e0b7c02790108d27ffbe7105017a1d15f1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,6 +92,7 @@ class SecondViewController: UIViewController {
     // MARK: - 姓名
 
     func setupName() {
+<<<<<<< HEAD
         nameField.placeholder = "懒羊羊"
         nameField.font = .systemFont(ofSize: 18)
         nameField.textColor = .black
@@ -95,12 +103,24 @@ class SecondViewController: UIViewController {
         cardView.addSubview(nameField)
 
         nameField.snp.makeConstraints { make in
+=======
+        nameLabel.text = "懒羊羊"
+        nameLabel.font = .boldSystemFont(ofSize: 18)
+
+        cardView.addSubview(nameLabel)
+
+        nameLabel.snp.makeConstraints { make in
+>>>>>>> b66ed6e0b7c02790108d27ffbe7105017a1d15f1
             make.top.equalTo(avatar).offset(10)
             make.left.equalTo(avatar.snp.right).offset(20)
         }
     }
 
+<<<<<<< HEAD
     // MARK: - ip地址
+=======
+    // MARK: - 电话
+>>>>>>> b66ed6e0b7c02790108d27ffbe7105017a1d15f1
 
     func setupPhone() {
         phoneLabel.text = "ip 青青草原"
@@ -110,8 +130,13 @@ class SecondViewController: UIViewController {
         cardView.addSubview(phoneLabel)
 
         phoneLabel.snp.makeConstraints { make in
+<<<<<<< HEAD
             make.top.equalTo(nameField.snp.bottom).offset(30)
             make.left.equalTo(nameField)
+=======
+            make.top.equalTo(nameLabel.snp.bottom).offset(30)
+            make.left.equalTo(nameLabel)
+>>>>>>> b66ed6e0b7c02790108d27ffbe7105017a1d15f1
         }
     }
 
