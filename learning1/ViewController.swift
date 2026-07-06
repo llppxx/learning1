@@ -9,7 +9,58 @@ import UIKit
 
 import SnapKit
 
-class ViewController: UIViewController , UITableViewDataSource , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ProfileCell: UITableViewCell {  //创建自定义cell子类
+    
+    let avatar = UIImageView()   //创建控件
+    let nameLabel = UILabel()
+    let followButton = UIButton()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupUI()
+    }
+    required init?(coder: NSCoder) {  //必须写，swift强制
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {  //ui布局
+        
+        contentView.addSubview(avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
+        contentView.addSubview(nameLabel)
+        contentView.addSubview(followButton)
+        
+        avatar.snp.makeConstraints { make in
+            make.left.equalTo(16)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(50)
+        }
+
+        nameLabel.snp.makeConstraints { make in
+            make.left.equalTo(avatar.snp.right).offset(12)
+            make.centerY.equalToSuperview()
+        }
+        
+        followButton.snp.makeConstraints { make in
+            make.right.equalTo(-16)
+            make.centerY.equalToSuperview()
+        }
+    }
+    
+    func configure(model: UserModel) {
+        nameLabel.text = model.name
+        avatar.image = UIImage(named: model.avatar)
+    }
+}
+    
+    
+struct UserModel {
+    let name: String
+    let avatar: String   // ⭐图片名
+    let desc: String
+}
+    
+class ViewController: UIViewController , UITableViewDataSource , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate  {
     
     let label = UILabel() //创建显示文本
     let button = UIButton()  //创建按钮
@@ -18,7 +69,11 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     let textView = UITextView() //创建多行输入框
     let tableView = UITableView() //创建列表
     var collectionView: UICollectionView! //创建高级布局
-    let data = ["🍎", "🍌", "🍇", "🍉", "🍓", "🍍"] //数据
+    let data: [UserModel] = [
+        UserModel(name: "懒羊羊", avatar: "avatar1", desc: "睡觉中"),
+        UserModel(name: "喜羊羊", avatar: "avatar2", desc: "奔跑"),
+        UserModel(name: "美羊羊", avatar: "avatar3", desc: "漂亮")
+    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,9 +83,9 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         setupLabel()
         setupButton()
         setupImageView()
-        setupTextField()
-        setupTextView()
-        //setupTableView()
+        //setupTextField()
+        //setupTextView()
+        setupTableView()
         //setupCollectionView()
     }
     
@@ -107,7 +162,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         textField.returnKeyType = .done
         
         view.addSubview(textField)
-
+        
         textField.snp.makeConstraints { make in  //布局
             make.centerX.equalToSuperview()
             make.top.equalTo(imageView.snp.bottom).offset(40)
@@ -122,48 +177,63 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         
         //多行输入框
         textView.text = "请输入你的个人简介"
-        textView.font = .systemFont(ofSize: 14)
+        textView.font = .systemFont(ofSize: 18)
         textView.textColor = .black
         textView.isEditable = true //是否可以编辑
         textView.isScrollEnabled = true //是否可以滚动
         textView.backgroundColor = UIColor(white: 0.95, alpha: 1)
         textView.layer.cornerRadius = 10
-        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-
+        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)  //内容的内边距
+        
         view.addSubview(textView)
-
+        
         textView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(textField.snp.bottom).offset(40)
+            make.top.equalTo(imageView.snp.bottom).offset(40)
             make.width.equalTo(300)
-            make.height.equalTo(50)
+            make.height.equalTo(250)
         }
     }
     
     
-    //列表
+    
+    //UITableViewDataSource 协议，必须写
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return data.count
+    }
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProfileCell
+        
+        let model = data[indexPath.row]
+
+        cell.configure(model: model)
+        return cell
+    }
+    
+    //UITableViewDelegate协议，规定怎么交互
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("点击：\(data[indexPath.row])")
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    //列表，自定义cell
     private func setupTableView(){
         view.addSubview(tableView)
-
+        
         tableView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(textView.snp.bottom).offset(40)
+            make.top.equalTo(imageView.snp.bottom).offset(40)
             make.width.equalTo(300)
-            make.height.equalTo(50)
+            make.height.equalTo(500)
         }
         
         tableView.dataSource = self  // 设置数据源
-
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "tableCell") // 注册数据源
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            return data.count
-    }
-    func tableView(_ tableView: UITableView,
-            cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "tableCell", for: indexPath)
-        cell.textLabel?.text = data[indexPath.row]
-        return cell
+        tableView.delegate = self
+        
+        tableView.register(ProfileCell.self, forCellReuseIdentifier: "cell") // 注册cell（自定义）
     }
     
     
@@ -184,7 +254,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in make.centerX.equalToSuperview()
-            make.top.equalTo(tableView.snp.bottom).offset(40)
+            make.top.equalTo(imageView.snp.bottom).offset(40)
             make.width.equalTo(300)
             make.height.equalTo(500)
         }
