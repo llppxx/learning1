@@ -121,6 +121,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        print("nav =", navigationController as Any)
         
         //显示文本
         setupLabel()
@@ -157,7 +158,6 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     @objc func goSecond() {
         let vc = SecondViewController()
         navigationController?.pushViewController(vc, animated: true)
-        print("navigationController =", navigationController as Any)
     
     }
     private func setupButton() {
