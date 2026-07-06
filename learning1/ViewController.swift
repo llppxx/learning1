@@ -95,12 +95,13 @@ class ProfileCollectionCell: UICollectionViewCell {
         titleLabel.text = model.name
     }
 }
-    
+  
 struct UserModel {
     let name: String
     let avatar: String   // ⭐图片名
     let desc: String
 }
+
     
 class ViewController: UIViewController , UITableViewDataSource , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate  {
     
@@ -123,8 +124,8 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         
         //显示文本
         setupLabel()
-        setupButton()
-        setupImageView()
+        //setupButton()
+        //setupImageView()
         //setupTextField()
         //setupTextView()
         //setupTableView()
@@ -188,7 +189,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         
         imageView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(button.snp.bottom).offset(40)
+            make.top.equalTo(label.snp.bottom).offset(40)
             make.width.height.equalTo(100)
         }
         
@@ -296,7 +297,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         view.addSubview(collectionView)
         
         collectionView.snp.makeConstraints { make in make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(40)
+            make.top.equalTo(label.snp.bottom).offset(40)
             make.width.equalTo(300)
             make.height.equalTo(500)
         }
