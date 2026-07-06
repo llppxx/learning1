@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class ProfileCell: UITableViewCell {  //创建自定义cell子类
+class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
     let avatar = UIImageView()   //创建控件
     let nameLabel = UILabel()
@@ -53,6 +53,48 @@ class ProfileCell: UITableViewCell {  //创建自定义cell子类
     }
 }
     
+class ProfileCollectionCell: UICollectionViewCell {
+
+    let imageView = UIImageView()
+    let titleLabel = UILabel()
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setupUI()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupUI() {
+
+        contentView.addSubview(imageView)
+        contentView.addSubview(titleLabel)
+
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+
+        titleLabel.font = .systemFont(ofSize: 14)
+        titleLabel.textAlignment = .center
+
+        imageView.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(10)
+            make.centerX.equalToSuperview()
+            make.width.height.equalTo(60)
+        }
+
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(imageView.snp.bottom).offset(8)
+            make.left.right.equalToSuperview()
+        }
+    }
+    
+    func configure(model: UserModel) {
+        imageView.image = UIImage(named: model.avatar)
+        titleLabel.text = model.name
+    }
+}
     
 struct UserModel {
     let name: String
@@ -85,8 +127,8 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         setupImageView()
         //setupTextField()
         //setupTextView()
-        setupTableView()
-        //setupCollectionView()
+        //setupTableView()
+        setupCollectionView()
     }
     
     //文本显示
@@ -249,7 +291,7 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
         collectionView.backgroundColor = .white
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "collectionCell")//告诉系统要用这个cell
+        collectionView.register(ProfileCollectionCell.self, forCellWithReuseIdentifier: "ProfileCollectionCell")//告诉系统要用这个cell
         
         view.addSubview(collectionView)
         
@@ -264,8 +306,12 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
             return data.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "collectionCell", for: indexPath)  //复用cell，不用重复创建
-        cell.backgroundColor = .systemBlue
+        let cell = collectionView.dequeueReusableCell(
+                withReuseIdentifier: "ProfileCollectionCell",
+                for: indexPath
+            ) as! ProfileCollectionCell
+        let model = data[indexPath.item]
+        cell.configure(model: model)
         return cell
     }
     // 点击
