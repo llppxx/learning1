@@ -50,10 +50,6 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
 
 class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDelegate  {
     
-    let label = UILabel() //创建显示文本
-    let button = UIButton()  //创建按钮
-    let imageView = UIImageView()  //创建图片
-    let textField = UITextField()  //创建单行输入框
     let tableView = UITableView() //创建列表
     let data: [UserModel] = [
         UserModel(name: "懒羊羊", avatar: "avatar1", desc: "睡觉中"),
@@ -65,26 +61,23 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupLabel()
+        navigationItem.title = "通讯录"
+        setupAddButton()
         setupTableView()
     }
     
-    private func setupLabel() {
-        label.text = "通讯录"
-        label.textColor = .black
-        label.font = .boldSystemFont(ofSize: 30)
+    func setupAddButton(){
+        //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
+        let addButton = UIBarButtonItem(barButtonSystemItem:  .add, target: self, action: #selector(addContact))
         
-        view.addSubview(label)
-        
-        label.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
-        }
-        
+        navigationItem.rightBarButtonItem = addButton
+    }
+    @objc func addContact(){
+        print("点击添加联系人按钮")
     }
     
-    //列表，自定义cell
-    private func setupTableView(){
+    
+    func setupTableView(){
         view.addSubview(tableView)
         
         tableView.snp.makeConstraints { make in
@@ -132,6 +125,8 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
 import SwiftUI
 
 #Preview {
-    ViewController()
+    UINavigationController(
+            rootViewController: ViewController()
+        )
 }
 #endif

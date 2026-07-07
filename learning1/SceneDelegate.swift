@@ -18,26 +18,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
-            let window = UIWindow(windowScene: windowScene)
+        let window = UIWindow(windowScene: windowScene)
 
-            // 1. 从 storyboard 创建首页 VC
+        // 1. 从 storyboard 创建首页 VC
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let homeVC = storyboard.instantiateViewController(withIdentifier: "ViewController")
 
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        // 2. 包一层 NavigationController（重点）
+        let nav = UINavigationController(rootViewController: homeVC)
 
-            let homeVC = storyboard.instantiateViewController(withIdentifier: "ViewController")
-
-            // 2. 包一层 NavigationController（重点）
-
-            let nav = UINavigationController(rootViewController: homeVC)
-
-            // 3. 设置根控制器
-
-            window.rootViewController = nav
-
-            self.window = window
-
-            window.makeKeyAndVisible()
-        print("SceneDelegate running")
+        // 3. 设置导航栏样式
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = .systemBlue
+        
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.white,
+            .font: UIFont.boldSystemFont(ofSize: 20)
+        ]
+        
+        nav.navigationBar.standardAppearance = appearance
+        nav.navigationBar.scrollEdgeAppearance = appearance
+        nav.navigationBar.tintColor = .white
+        
+        // 4. 设置根控制器
+        window.rootViewController = nav
+        self.window = window
+        window.makeKeyAndVisible()
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
