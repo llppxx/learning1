@@ -17,12 +17,13 @@ class SecondViewController: UIViewController {
     let followButton = UIButton()
     let introLabel = UILabel()
     let nameField = UITextField()
+    var user: UserModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
-
+        
         setupBackground()
         setupCard()
         setupAvatar()
@@ -67,7 +68,10 @@ class SecondViewController: UIViewController {
     // MARK: - 头像（左）
 
     func setupAvatar() {
-        avatar.image = UIImage(named: "Image")
+        guard let user = user else {
+                    return
+                }
+        avatar.image = UIImage(named: user.avatar)
         avatar.contentMode = .scaleAspectFill
         avatar.clipsToBounds = true
         avatar.layer.cornerRadius = 50
@@ -84,8 +88,11 @@ class SecondViewController: UIViewController {
     // MARK: - 姓名
 
     func setupName() {
-        nameField.placeholder = "懒羊羊"
-        nameField.text = "懒羊羊"
+        guard let user = user else {
+                    return
+                }
+        nameField.placeholder = user.name
+        nameField.text = user.name
         nameField.font = .systemFont(ofSize: 18)
         nameField.textColor = .black
         nameField.borderStyle = .roundedRect  //键盘风格

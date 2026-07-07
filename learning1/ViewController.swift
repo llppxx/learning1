@@ -13,7 +13,6 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
     let avatar = UIImageView()   //创建控件
     let nameLabel = UILabel()
-    let followButton = UIButton()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +27,6 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
         
         contentView.addSubview(avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
         contentView.addSubview(nameLabel)
-        contentView.addSubview(followButton)
         
         avatar.snp.makeConstraints { make in
             make.left.equalTo(16)
@@ -41,10 +39,6 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
             make.centerY.equalToSuperview()
         }
         
-        followButton.snp.makeConstraints { make in
-            make.right.equalTo(-16)
-            make.centerY.equalToSuperview()
-        }
     }
     
     func configure(model: UserModel) {
@@ -53,65 +47,14 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     }
 }
     
-class ProfileCollectionCell: UICollectionViewCell {
 
-    let imageView = UIImageView()
-    let titleLabel = UILabel()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-
-        setupUI()
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {
-
-        contentView.addSubview(imageView)
-        contentView.addSubview(titleLabel)
-
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-
-        titleLabel.font = .systemFont(ofSize: 14)
-        titleLabel.textAlignment = .center
-
-        imageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
-            make.centerX.equalToSuperview()
-            make.width.height.equalTo(60)
-        }
-
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(imageView.snp.bottom).offset(8)
-            make.left.right.equalToSuperview()
-        }
-    }
-    
-    func configure(model: UserModel) {
-        imageView.image = UIImage(named: model.avatar)
-        titleLabel.text = model.name
-    }
-}
-  
-struct UserModel {
-    let name: String
-    let avatar: String   // ⭐图片名
-    let desc: String
-}
-
-    
-class ViewController: UIViewController , UITableViewDataSource , UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UITableViewDelegate  {
+class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDelegate  {
     
     let label = UILabel() //创建显示文本
     let button = UIButton()  //创建按钮
     let imageView = UIImageView()  //创建图片
     let textField = UITextField()  //创建单行输入框
-    let textView = UITextView() //创建多行输入框
     let tableView = UITableView() //创建列表
-    var collectionView: UICollectionView! //创建高级布局
     let data: [UserModel] = [
         UserModel(name: "懒羊羊", avatar: "avatar1", desc: "睡觉中"),
         UserModel(name: "喜羊羊", avatar: "avatar2", desc: "奔跑"),
@@ -121,125 +64,41 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        print("nav =", navigationController as Any)
         
-        //显示文本
         setupLabel()
-        setupButton()
-        //setupImageView()
-        //setupTextField()
-        //setupTextView()
-        //setupTableView()
-        setupCollectionView()
+        setupTableView()
     }
     
-    //文本显示
-    private func setupLabel(){
-        // 1. 配置属性
-        label.text = "第一个显示文本哈哈哈哈哈"
+    private func setupLabel() {
+        label.text = "通讯录"
         label.textColor = .black
-        label.font = .systemFont(ofSize: 30)
-        label.numberOfLines = 0  //与宽度配合使用
-        label.textAlignment = .center
+        label.font = .boldSystemFont(ofSize: 30)
         
-        // 2. 加入视图
         view.addSubview(label)
         
-        // 3. 布局
         label.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(20)    //顶部等于安全距离（状态栏），再向下偏移20
-            make.width.equalTo(500)   //宽度约束，如果不约束宽度，不会换行
             make.centerX.equalToSuperview()
-        }
-    }
-    
-    
-    //按钮
-    @objc func goSecond() {
-        let vc = SecondViewController()
-        navigationController?.pushViewController(vc, animated: true)
-    
-    }
-    private func setupButton() {
-
-        button.setTitle("去第二页", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 10
-
-        button.addTarget(self, action: #selector(goSecond), for: .touchUpInside)
-
-        view.addSubview(button)
-
-        button.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
-            make.width.equalTo(200)
-            make.height.equalTo(50)
-        }
-    }
-    
-    //图片显示
-    private func setupImageView(){
-        imageView.image = UIImage(named: "Image") //设置图片
-        imageView.contentMode = .scaleAspectFill //配置属性
-        imageView.clipsToBounds = true
-        
-        view.addSubview(imageView)
-        
-        imageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(label.snp.bottom).offset(40)
-            make.width.height.equalTo(100)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(5)
         }
         
-        imageView.layer.cornerRadius = 50 //圆形头像
     }
     
-    //单行输入框
-    private func setupTextField(){
-        textField.placeholder = "请输入用户名"  //配置属性
-        textField.font = .systemFont(ofSize: 14)
-        textField.borderStyle = .roundedRect
-        textField.keyboardType = .default  //键盘类型
-        textField.returnKeyType = .done
+    //列表，自定义cell
+    private func setupTableView(){
+        view.addSubview(tableView)
         
-        view.addSubview(textField)
-        
-        textField.snp.makeConstraints { make in  //布局
+        tableView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(40)
-            make.width.equalTo(250)
-            make.height.equalTo(40)
-        }
-    }
-    
-    
-    //多行输入框
-    private func setupTextView(){
-        
-        //多行输入框
-        textView.text = "请输入你的个人简介"
-        textView.font = .systemFont(ofSize: 18)
-        textView.textColor = .black
-        textView.isEditable = true //是否可以编辑
-        textView.isScrollEnabled = true //是否可以滚动
-        textView.backgroundColor = UIColor(white: 0.95, alpha: 1)
-        textView.layer.cornerRadius = 10
-        textView.textContainerInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)  //内容的内边距
-        
-        view.addSubview(textView)
-        
-        textView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(40)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(80)
             make.width.equalTo(300)
-            make.height.equalTo(250)
+            make.height.equalTo(500)
         }
+        
+        tableView.dataSource = self  // 设置数据源
+        tableView.delegate = self
+        
+        tableView.register(ProfileCell.self, forCellReuseIdentifier: "cell") // 注册cell（自定义）
     }
-    
-    
-    
     //UITableViewDataSource 协议，必须写
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return data.count
@@ -256,70 +115,16 @@ class ViewController: UIViewController , UITableViewDataSource , UICollectionVie
     
     //UITableViewDelegate协议，规定怎么交互
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("点击：\(data[indexPath.row])")
+        let user = data[indexPath.row]
+        let vc = SecondViewController()
+        vc.user = user
+        navigationController?.pushViewController(vc, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
     }
     
-    //列表，自定义cell
-    private func setupTableView(){
-        view.addSubview(tableView)
-        
-        tableView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalTo(imageView.snp.bottom).offset(40)
-            make.width.equalTo(300)
-            make.height.equalTo(500)
-        }
-        
-        tableView.dataSource = self  // 设置数据源
-        tableView.delegate = self
-        
-        tableView.register(ProfileCell.self, forCellReuseIdentifier: "cell") // 注册cell（自定义）
-    }
     
-    
-    //高级布局
-    private func setupCollectionView(){
-        
-        let layout = UICollectionViewFlowLayout() //控制每个格子大小、间距
-        layout.itemSize = CGSize(width: 100, height: 100)
-        layout.minimumLineSpacing = 10
-        layout.minimumInteritemSpacing = 10
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        
-        collectionView.backgroundColor = .white
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        collectionView.register(ProfileCollectionCell.self, forCellWithReuseIdentifier: "ProfileCollectionCell")//告诉系统要用这个cell
-        
-        view.addSubview(collectionView)
-        
-        collectionView.snp.makeConstraints { make in make.centerX.equalToSuperview()
-            make.top.equalTo(button.snp.bottom).offset(40)
-            make.width.equalTo(300)
-            make.height.equalTo(500)
-        }
-        
-    }
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            return data.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(
-                withReuseIdentifier: "ProfileCollectionCell",
-                for: indexPath
-            ) as! ProfileCollectionCell
-        let model = data[indexPath.item]
-        cell.configure(model: model)
-        return cell
-    }
-    // 点击
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-            print("点击：\(data[indexPath.item])")
-
-        }
     
 }
 
