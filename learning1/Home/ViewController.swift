@@ -12,11 +12,6 @@ import SnapKit
 class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDelegate  {
     
     let tableView = UITableView() //创建列表
-    var data: [UserModel] = [
-        UserModel(name: "懒羊羊", avatar: "avatar1", desc: "睡觉中"),
-        UserModel(name: "喜羊羊", avatar: "avatar2", desc: "奔跑"),
-        UserModel(name: "美羊羊", avatar: "avatar3", desc: "漂亮")
-    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,10 +33,13 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         
         print("点击添加联系人按钮")
         let addVC = AddContactViewController()
+        
         addVC.delegate = self
+        let nav = ModalNavigationController(rootViewController: addVC)
+        
         addVC.modalPresentationStyle = .pageSheet
         present(
-            addVC,
+            nav,
             animated:true
         )
     }
@@ -64,13 +62,13 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     }
     //UITableViewDataSource 协议，必须写
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return contactList.count
     }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProfileCell
         
-        let model = data[indexPath.row]
+        let model = contactList[indexPath.row]
 
         cell.configure(model: model)
         return cell
@@ -78,7 +76,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     //UITableViewDelegate协议，规定怎么交互
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = data[indexPath.row]
+        let user = contactList[indexPath.row]
         let vc = ProfileViewController()
         vc.user = user
         navigationController?.pushViewController(vc, animated: true)
@@ -93,7 +91,7 @@ extension ViewController: AddContactDelegate {
 
     func didAddContact(_ user: UserModel) {
 
-        data.append(user)
+        contactList.append(user)
         tableView.reloadData()
     }
 }

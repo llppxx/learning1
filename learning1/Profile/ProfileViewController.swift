@@ -87,7 +87,6 @@ class ProfileViewController: UIViewController {
         
         let label = UILabel()
         
-        label.text = "这个人很懒，什么都没有写..."
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
         label.numberOfLines = 0
@@ -223,9 +222,13 @@ class ProfileViewController: UIViewController {
         guard let user = user else {
             return
         }
+        let ss:String = "ip "
+        let ProfileAddress = ss + user.address
         avatar.image = UIImage(named:user.avatar)
         nameField.text = user.name
-        phoneLabel.text = "ip 青青草原"
+        phoneLabel.text = ProfileAddress
+        introLabel.text = user.desc
+        
         
     }
 }

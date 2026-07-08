@@ -42,20 +42,14 @@ class AddContactViewController: UIViewController {
         return textField
     }()
     
-    
-    private lazy var saveButton: UIButton = {
+    private lazy var addressTextField: UITextField = {
         
-        let button = UIButton(type: .system)
-        button.setTitle("保存", for: .normal)
-        button.addTarget(
-            self,
-            action: #selector(saveAction),
-            for: .touchUpInside
-        )
+        let textField = UITextField()
+        textField.placeholder = "请输入地址"
+        textField.borderStyle = .roundedRect
         
-        return button
+        return textField
     }()
-    
     
     
     override func viewDidLoad() {
@@ -64,17 +58,36 @@ class AddContactViewController: UIViewController {
         view.backgroundColor = .white
         title = "添加联系人"
         
+        setupNavigationBar()
         setupViews()
         setupUI()
     }
     
+    private func setupNavigationBar(){
+        
+        // 左侧取消按钮
+        navigationItem.leftBarButtonItem = UIBarButtonItem(
+            title: "取消",
+            style: .plain,
+            target: self,
+            action: #selector(cancelAction)
+        )
+
+        // 右侧保存按钮
+        navigationItem.rightBarButtonItem = UIBarButtonItem(
+            title: "保存",
+            style: .done,
+            target: self,
+            action: #selector(saveAction)
+        )
+        
+    }
     
     private func setupViews(){
         
         view.addSubview(nameTextField)
         view.addSubview(descTextField)
-        view.addSubview(saveButton)
-        
+        view.addSubview(addressTextField)
     }
     
     
@@ -96,11 +109,14 @@ class AddContactViewController: UIViewController {
             make.height.equalTo(50)
         }
         
-        saveButton.snp.makeConstraints { make in
+        addressTextField.snp.makeConstraints { make in
             make.top.equalTo(descTextField.snp.bottom)
-                .offset(30)
-            make.centerX.equalToSuperview()
+                .offset(20)
+            make.left.right.equalToSuperview()
+                .inset(30)
+            make.height.equalTo(50)
         }
+        
     }
 
     @objc private func saveAction(){
@@ -108,17 +124,34 @@ class AddContactViewController: UIViewController {
         guard let name = nameTextField.text,
               !name.isEmpty
         else { return }
-        
-        let desc = descTextField.text ?? ""
+        let  desc: String
+        if let text = descTextField.text, !text.isEmpty{
+            desc = text
+        }else{
+            desc = "这个人很懒，什么也没写..."
+        }
+            
+        let  address: String
+        if let text = addressTextField.text, !text.isEmpty{
+            address = text
+        }else{
+            address = "青青草原"
+        }
         
         let user = UserModel(
             name: name,
             avatar: "avatar_defualt",
-            desc: desc
+            desc: desc,
+            address: address
         )
         
         delegate?.didAddContact(user)
         
+        dismiss(animated: true)
+    }
+    
+    @objc private func cancelAction() {
+
         dismiss(animated: true)
     }
 }
