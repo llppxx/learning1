@@ -19,21 +19,21 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
 
         let window = UIWindow(windowScene: windowScene)
-
+        
         // 1. 从 storyboard 创建首页 VC
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let homeVC = storyboard.instantiateViewController(withIdentifier: "ViewController")
 
         // 2. 包一层 NavigationController（重点）
-        let nav = UINavigationController(rootViewController: homeVC)
+        let nav = CustomNavigationController(rootViewController: homeVC)
 
         // 3. 设置导航栏样式
 //        let appearance = UINavigationBarAppearance()
 //        appearance.configureWithOpaqueBackground()
-//        appearance.backgroundColor = .systemBlue
+//        appearance.backgroundColor = .systemGray5
 //        
 //        appearance.titleTextAttributes = [
-//            .foregroundColor: UIColor.white,
+//            .foregroundColor: UIColor.label,
 //            .font: UIFont.boldSystemFont(ofSize: 20)
 //        ]
 //        

@@ -16,7 +16,6 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         setupUI()
     }
     required init?(coder: NSCoder) {  //必须写，swift强制
@@ -125,7 +124,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
 import SwiftUI
 
 #Preview {
-    UINavigationController(
+    CustomNavigationController(
             rootViewController: ViewController()
         )
 }

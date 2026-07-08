@@ -11,7 +11,7 @@ class SecondViewController: UIViewController {
     
     var user: UserModel?
     
-    // MARK: - UI控件
+    // MARK: - 初始化控件
     private lazy var backgroundImageView: UIImageView = {
         
         let imageView = UIImageView()
@@ -96,10 +96,37 @@ class SecondViewController: UIViewController {
         
     }()
     
+    private lazy var backButton: UIButton = {
+
+        let button = UIButton(type: .system)
+        button.setImage(
+            UIImage(systemName:"chevron.left"),
+            for:.normal
+        )
+        
+        button.tintColor = .black
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 20
+
+        button.addTarget(
+            self,
+            action:#selector(backClick),
+            for:.touchUpInside
+        )
+        return button
+    }()
+    @objc private func backClick(){
+
+        navigationController?.popViewController(animated:true)
+
+    }
+    
+    // MARK: - 加入视图
     private func setupViews() {
         
         view.addSubview(backgroundImageView)
         view.addSubview(cardView)
+        view.addSubview(backButton)
         
         cardView.addSubview(avatar)
         cardView.addSubview(nameField)
@@ -109,17 +136,34 @@ class SecondViewController: UIViewController {
         
     }
     
-    
+    // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
         
         setupViews()
         setupConstraints()
         setupData()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        print("second出现")
+    }
+
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        print("second消失")
+    }
+
+    // MARK: - 设置布局
     private func setupConstraints(){
         
         backgroundImageView.snp.makeConstraints { make in
@@ -163,8 +207,17 @@ class SecondViewController: UIViewController {
 
         }
         
+        backButton.snp.makeConstraints { make in
+            
+            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.left.equalToSuperview().offset(16)
+            make.width.height.equalTo(40)
+
+        }
+        
     }
     
+    // MARK: - 设置控件数据
     private func setupData(){
         
         guard let user = user else {
@@ -181,7 +234,7 @@ class SecondViewController: UIViewController {
 import SwiftUI
 
 #Preview {
-    UINavigationController(
+    CustomNavigationController(
             rootViewController: ViewController()
         )
 }#endif
