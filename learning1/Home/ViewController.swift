@@ -9,48 +9,10 @@ import UIKit
 
 import SnapKit
 
-class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
-    
-    let avatar = UIImageView()   //创建控件
-    let nameLabel = UILabel()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-    }
-    required init?(coder: NSCoder) {  //必须写，swift强制
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func setupUI() {  //ui布局
-        
-        contentView.addSubview(avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
-        contentView.addSubview(nameLabel)
-        
-        avatar.snp.makeConstraints { make in
-            make.left.equalTo(16)
-            make.centerY.equalToSuperview()
-            make.width.height.equalTo(50)
-        }
-
-        nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(avatar.snp.right).offset(12)
-            make.centerY.equalToSuperview()
-        }
-        
-    }
-    
-    func configure(model: UserModel) {
-        nameLabel.text = model.name
-        avatar.image = UIImage(named: model.avatar)
-    }
-}
-    
-
 class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDelegate  {
     
     let tableView = UITableView() //创建列表
-    let data: [UserModel] = [
+    var data: [UserModel] = [
         UserModel(name: "懒羊羊", avatar: "avatar1", desc: "睡觉中"),
         UserModel(name: "喜羊羊", avatar: "avatar2", desc: "奔跑"),
         UserModel(name: "美羊羊", avatar: "avatar3", desc: "漂亮")
@@ -65,6 +27,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         setupTableView()
     }
     
+    
     func setupAddButton(){
         //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
         let addButton = UIBarButtonItem(barButtonSystemItem:  .add, target: self, action: #selector(addContact))
@@ -72,7 +35,15 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         navigationItem.rightBarButtonItem = addButton
     }
     @objc func addContact(){
+        
         print("点击添加联系人按钮")
+        let addVC = AddContactViewController()
+        addVC.delegate = self
+        addVC.modalPresentationStyle = .pageSheet
+        present(
+            addVC,
+            animated:true
+        )
     }
     
     
@@ -108,7 +79,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     //UITableViewDelegate协议，规定怎么交互
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = data[indexPath.row]
-        let vc = SecondViewController()
+        let vc = ProfileViewController()
         vc.user = user
         navigationController?.pushViewController(vc, animated: true)
     }
@@ -117,7 +88,14 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     }
     
     
-    
+}
+extension ViewController: AddContactDelegate {
+
+    func didAddContact(_ user: UserModel) {
+
+        data.append(user)
+        tableView.reloadData()
+    }
 }
 
 #if canImport(SwiftUI)
