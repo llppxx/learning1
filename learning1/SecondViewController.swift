@@ -8,157 +8,172 @@ import UIKit
 import SnapKit
 
 class SecondViewController: UIViewController {
-
-    // MARK: - UI控件
-    let backgroundImageView = UIImageView()
-    let cardView = UIView()
-    let avatar = UIImageView()
-    let phoneLabel = UILabel()
-    let followButton = UIButton()
-    let introLabel = UILabel()
-    let nameField = UITextField()
+    
     var user: UserModel?
+    
+    // MARK: - UI控件
+    private lazy var backgroundImageView: UIImageView = {
+        
+        let imageView = UIImageView()
+        
+        imageView.image = UIImage(named: "image_background")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        
+        return imageView
+        
+    }()
+    
+    private lazy var cardView:UIView = {
+        let card = UIView()
+        
+        card.backgroundColor = .white
+        card.layer.cornerRadius = 20
+        card.layer.shadowColor = UIColor.black.cgColor
+        card.layer.shadowOpacity = 0.1
+        card.layer.shadowRadius = 10
+        return card
+    }()
+    
+    private lazy var avatar:UIImageView = {
+        let avatarView = UIImageView()
+        
+        avatarView.contentMode = .scaleAspectFill
+        avatarView.clipsToBounds = true
+        avatarView.layer.cornerRadius = 50
+        return avatarView
+    }()
+    
+    private lazy var nameField: UITextField = {
+        
+        let textField = UITextField()
+        
+        textField.font = .systemFont(ofSize: 18)
+        textField.textColor = .black
+        textField.borderStyle = .roundedRect
+        textField.keyboardType = .default
+        textField.returnKeyType = .done
+        
+        return textField
+        
+    }()
+    
+    private lazy var phoneLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .gray
+        
+        return label
+        
+    }()
+    
+    private lazy var followButton: UIButton = {
+        
+        let button = UIButton(type: .system)
+        
+        button.setTitle("关注 +", for: .normal)
+        button.backgroundColor = .systemRed
+        button.setTitleColor(.white, for: .normal)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        
+        return button
+        
+    }()
+    
+    private lazy var introLabel: UILabel = {
+        
+        let label = UILabel()
+        
+        label.text = "这个人很懒，什么都没有写..."
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .darkGray
+        label.numberOfLines = 0
+        
+        return label
+        
+    }()
+    
+    private func setupViews() {
+        
+        view.addSubview(backgroundImageView)
+        view.addSubview(cardView)
+        
+        cardView.addSubview(avatar)
+        cardView.addSubview(nameField)
+        cardView.addSubview(phoneLabel)
+        cardView.addSubview(followButton)
+        cardView.addSubview(introLabel)
+        
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         
-        setupBackground()
-        setupCard()
-        setupAvatar()
-        setupName()
-        setupPhone()
-        setupButton()
-        setupIntro()
+        setupViews()
+        setupConstraints()
+        setupData()
     }
-
-    // MARK: - 背景图（上1/3）
-
-    func setupBackground() {
-        backgroundImageView.image = UIImage(named: "image_background")
-        backgroundImageView.contentMode = .scaleAspectFill
-        backgroundImageView.clipsToBounds = true
-
-        view.addSubview(backgroundImageView)
-
+    
+    private func setupConstraints(){
+        
         backgroundImageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.33)
         }
-    }
-
-    // MARK: - 浮层卡片
-
-    func setupCard() {
-        cardView.backgroundColor = .white
-        cardView.layer.cornerRadius = 20
-        cardView.layer.shadowColor = UIColor.black.cgColor
-        cardView.layer.shadowOpacity = 0.1
-        cardView.layer.shadowRadius = 10
-
-        view.addSubview(cardView)
-
+        
         cardView.snp.makeConstraints { make in
             make.top.equalTo(backgroundImageView.snp.bottom).offset(-40)
             make.left.right.equalToSuperview().inset(16)
         }
-    }
-
-    // MARK: - 头像（左）
-
-    func setupAvatar() {
-        guard let user = user else {
-                    return
-                }
-        avatar.image = UIImage(named: user.avatar)
-        avatar.contentMode = .scaleAspectFill
-        avatar.clipsToBounds = true
-        avatar.layer.cornerRadius = 50
-
-        cardView.addSubview(avatar)
-
+        
         avatar.snp.makeConstraints { make in
             make.top.equalTo(cardView).offset(20)
             make.left.equalTo(cardView).offset(16)
             make.width.height.equalTo(100)
         }
-    }
-
-    // MARK: - 姓名
-
-    func setupName() {
-        guard let user = user else {
-                    return
-                }
-        nameField.placeholder = user.name
-        nameField.text = user.name
-        nameField.font = .systemFont(ofSize: 18)
-        nameField.textColor = .black
-        nameField.borderStyle = .roundedRect  //键盘风格
-        nameField.keyboardType = .default  //键盘类型
-        nameField.returnKeyType = .done  //回车类型
-
-        cardView.addSubview(nameField)
-
+        
         nameField.snp.makeConstraints { make in
             make.top.equalTo(avatar).offset(10)
             make.left.equalTo(avatar.snp.right).offset(20)
         }
-    }
-
-    // MARK: - ip地址
-
-    func setupPhone() {
-        phoneLabel.text = "ip 青青草原"
-        phoneLabel.font = .systemFont(ofSize: 14)
-        phoneLabel.textColor = .gray
-
-        cardView.addSubview(phoneLabel)
-
+        
         phoneLabel.snp.makeConstraints { make in
             make.top.equalTo(nameField.snp.bottom).offset(30)
             make.left.equalTo(nameField)
-            make.top.equalTo(nameField.snp.bottom).offset(30)
-            make.left.equalTo(nameField)
         }
-    }
-
-    // MARK: - 关注按钮（右侧）
-
-    func setupButton() {
-        followButton.setTitle("关注 +", for: .normal)
-        followButton.backgroundColor = .systemRed
-        followButton.setTitleColor(.white, for: .normal)
-        followButton.layer.cornerRadius = 20
-        followButton.clipsToBounds = true
-
-        cardView.addSubview(followButton)
-
+        
         followButton.snp.makeConstraints { make in
             make.centerY.equalTo(avatar)
             make.right.equalTo(cardView).offset(-20)
             make.width.equalTo(80)
             make.height.equalTo(35)
         }
-    }
-
-    // MARK: - 简介
-
-    func setupIntro() {
-        introLabel.text = "这个人很懒，什么都没有写..."
-        introLabel.font = .systemFont(ofSize: 14)
-        introLabel.textColor = .darkGray
-        introLabel.numberOfLines = 0
-
-        cardView.addSubview(introLabel)
-
+        
         introLabel.snp.makeConstraints { make in
-            make.top.equalTo(avatar.snp.bottom).offset(16)
-            make.left.equalTo(cardView).offset(16)
-            make.right.equalTo(cardView).offset(-16)
-            make.bottom.equalTo(cardView).offset(-16)
+            
+            make.top.equalTo(phoneLabel.snp.bottom).offset(20)
+            make.left.right.equalTo(cardView).inset(16)
+            make.bottom.equalTo(cardView).offset(-20)
+
         }
+        
+    }
+    
+    private func setupData(){
+        
+        guard let user = user else {
+            return
+        }
+        avatar.image = UIImage(named:user.avatar)
+        nameField.text = user.name
+        phoneLabel.text = "ip 青青草原"
+        
     }
 }
 
@@ -166,6 +181,7 @@ class SecondViewController: UIViewController {
 import SwiftUI
 
 #Preview {
-    SecondViewController()
-}
-#endif
+    UINavigationController(
+            rootViewController: ViewController()
+        )
+}#endif

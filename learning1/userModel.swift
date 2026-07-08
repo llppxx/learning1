@@ -8,7 +8,7 @@
 import UIKit
 struct UserModel {
     let name: String
-    let avatar: String   // ⭐图片名
+    let avatar: String
     let desc: String
 }
 

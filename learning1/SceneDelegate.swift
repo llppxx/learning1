@@ -28,18 +28,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let nav = UINavigationController(rootViewController: homeVC)
 
         // 3. 设置导航栏样式
-        let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
-        appearance.backgroundColor = .systemBlue
-        
-        appearance.titleTextAttributes = [
-            .foregroundColor: UIColor.white,
-            .font: UIFont.boldSystemFont(ofSize: 20)
-        ]
-        
-        nav.navigationBar.standardAppearance = appearance
-        nav.navigationBar.scrollEdgeAppearance = appearance
-        nav.navigationBar.tintColor = .white
+//        let appearance = UINavigationBarAppearance()
+//        appearance.configureWithOpaqueBackground()
+//        appearance.backgroundColor = .systemBlue
+//        
+//        appearance.titleTextAttributes = [
+//            .foregroundColor: UIColor.white,
+//            .font: UIFont.boldSystemFont(ofSize: 20)
+//        ]
+//        
+//        nav.navigationBar.standardAppearance = appearance
+//        nav.navigationBar.scrollEdgeAppearance = appearance
+//        nav.navigationBar.tintColor = .white
         
         // 4. 设置根控制器
         window.rootViewController = nav
