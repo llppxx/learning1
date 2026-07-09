@@ -7,7 +7,7 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController ,UITextFieldDelegate{
     
     var user: UserModel?
     
@@ -54,6 +54,7 @@ class ProfileViewController: UIViewController {
         textField.borderStyle = .roundedRect
         textField.keyboardType = .default
         textField.returnKeyType = .done
+        textField.delegate = self
         
         return textField
         
@@ -245,17 +246,26 @@ class ProfileViewController: UIViewController {
         let nav = ModalNavigationController(rootViewController: changeAvatarvc)
         present(nav,animated: true)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == nameField{
+            guard let user = user else{
+                return true
+            }
+            if let text = textField.text, !text.isEmpty{ user.name = text }
+        }
+        return true
+    }
 }
 
 extension ProfileViewController: AvatarPickerDelegate {
 
     func didSelectAvatar(_ imageName: String) {
-        guard var user = user else {
+        guard let user = user else {
             return
         }
 
-        user.avatar = imageName  //此时修改的是副本
-        self.user = user  //必须赋值回去，否则修改无效
+        user.avatar = imageName  //user是class，是引用类型，所以能直接修改
         avatar.image = UIImage(named: user.avatar)
     }
 }

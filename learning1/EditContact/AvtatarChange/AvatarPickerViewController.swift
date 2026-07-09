@@ -10,19 +10,11 @@ import UIKit
 import SnapKit
 
 protocol AvatarPickerDelegate: AnyObject {
-    
     func didSelectAvatar(_ imageName: String)
 }
 
-extension AvatarPickerDelegate {
-    func didSelectAvatar(_ user: UserModel) {
-        print("换头像啦")
-    }
-}
-
-
 class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UICollectionViewDataSource {
-    weak var delegate: AvatarPickerDelegate?
+    weak var delegate: AvatarPickerDelegate?  //跟Profile中changeAvatar函数changeAvatarvc.delegate = self对应，建立联系
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -39,13 +31,13 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         return vc
     }()
     
-    let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt"] //数据
+    let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt", "avatar6"] //数据
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        
+        title = "更换头像"
         setupConstraints()
     }
     
@@ -55,9 +47,6 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)  //复用cell，不用重复创建
-        cell.contentView.subviews.forEach {
-            $0.removeFromSuperview()
-        }
         let imageView = UIImageView(
                 image: UIImage(named: avatars[indexPath.item])
             )
@@ -76,9 +65,10 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         dismiss(animated: true)
 
     }
+    
+    
     private func setupConstraints(){
-        collectionView.snp.makeConstraints{
-            make in
+        collectionView.snp.makeConstraints{  make in
             make.center.equalToSuperview()
             make.width.equalTo(320)
             make.height.equalTo(400)
