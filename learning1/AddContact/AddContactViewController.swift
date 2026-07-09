@@ -63,6 +63,17 @@ class AddContactViewController: UIViewController {
         setupUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("addContact出现la")
+    }
+
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("addContact消失la")
+    }
+    
     private func setupNavigationBar(){
         
         // 左侧取消按钮

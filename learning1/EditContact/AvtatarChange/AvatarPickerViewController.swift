@@ -41,6 +41,17 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         setupConstraints()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("avatarChange出现啦~~~~")
+    }
+
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("avatarChange消失啦~~~~")
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
                 return avatars.count
         }

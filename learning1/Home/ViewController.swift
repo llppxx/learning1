@@ -25,6 +25,13 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.reloadData()
+        print("主页出现啦")
+    }
+    
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("主页消失啦")
     }
     
     
