@@ -125,18 +125,12 @@ class AddContactViewController: UIViewController {
               !name.isEmpty
         else { return }
         let  desc: String
-        if let text = descTextField.text, !text.isEmpty{
-            desc = text
-        }else{
-            desc = "这个人很懒，什么也没写..."
-        }
+        if let text = descTextField.text, !text.isEmpty{  desc = text  }
+        else{  desc = "这个人很懒，什么也没写..."  }
             
         let  address: String
-        if let text = addressTextField.text, !text.isEmpty{
-            address = text
-        }else{
-            address = "青青草原"
-        }
+        if let text = addressTextField.text, !text.isEmpty{  address = text  }
+        else{  address = "青青草原"  }
         
         let user = UserModel(
             name: name,
@@ -146,7 +140,6 @@ class AddContactViewController: UIViewController {
         )
         
         delegate?.didAddContact(user)
-        
         dismiss(animated: true)
     }
     

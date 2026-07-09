@@ -41,6 +41,7 @@ class ProfileViewController: UIViewController {
         avatarView.contentMode = .scaleAspectFill
         avatarView.clipsToBounds = true
         avatarView.layer.cornerRadius = 50
+        avatarView.isUserInteractionEnabled = true  //允许点击交互
         return avatarView
     }()
     
@@ -117,9 +118,35 @@ class ProfileViewController: UIViewController {
     @objc private func backClick(){
 
         navigationController?.popViewController(animated:true)
-
     }
     
+    
+    // MARK: - 生命周期
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.backgroundColor = .white
+        navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        
+        setupViews()
+        setupConstraints()
+        setupData()
+        addAvatarGesture()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+        print("profile出现")
+    }
+
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: true)
+        print("profile消失")
+    }
+    
+
     // MARK: - 加入视图
     private func setupViews() {
         
@@ -134,34 +161,8 @@ class ProfileViewController: UIViewController {
         cardView.addSubview(introLabel)
         
     }
+
     
-    // MARK: - 生命周期
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
-        setupViews()
-        setupConstraints()
-        setupData()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        navigationController?.setNavigationBarHidden(true, animated: true)
-        print("profile出现")
-    }
-
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        navigationController?.setNavigationBarHidden(false, animated: true)
-        print("profile消失")
-    }
-
     // MARK: - 设置布局
     private func setupConstraints(){
         
@@ -207,7 +208,7 @@ class ProfileViewController: UIViewController {
         }
         
         backButton.snp.makeConstraints { make in
-            
+        
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(16)
             make.width.height.equalTo(40)
@@ -229,7 +230,33 @@ class ProfileViewController: UIViewController {
         phoneLabel.text = ProfileAddress
         introLabel.text = user.desc
         
+    }
+    
+    private func addAvatarGesture(){
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(changeAvatar))
+        avatar.addGestureRecognizer(tap)
+    }
+    @objc private func changeAvatar(){
+        
+        let changeAvatarvc = AvatarPickerViewController()
+        changeAvatarvc.delegate = self
+        changeAvatarvc.modalPresentationStyle = .pageSheet
+        let nav = ModalNavigationController(rootViewController: changeAvatarvc)
+        present(nav,animated: true)
+    }
+}
+
+extension ProfileViewController: AvatarPickerDelegate {
+
+    func didSelectAvatar(_ imageName: String) {
+        guard var user = user else {
+            return
+        }
+
+        user.avatar = imageName  //此时修改的是副本
+        self.user = user  //必须赋值回去，否则修改无效
+        avatar.image = UIImage(named: user.avatar)
     }
 }
 

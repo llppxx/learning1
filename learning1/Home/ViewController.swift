@@ -22,6 +22,11 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         setupTableView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+    }
+    
     
     func setupAddButton(){
         //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
