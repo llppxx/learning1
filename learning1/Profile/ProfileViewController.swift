@@ -241,7 +241,11 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     @objc private func changeAvatar(){
         
         let changeAvatarvc = AvatarPickerViewController()
-        changeAvatarvc.delegate = self
+        changeAvatarvc.onAvatarSelected = { [weak self] avatarName in
+            self?.user?.avatar = avatarName
+            self?.avatar.image = UIImage(named: avatarName)
+            print("Pvc收到头像",avatarName)
+        }
         changeAvatarvc.modalPresentationStyle = .pageSheet
         let nav = ModalNavigationController(rootViewController: changeAvatarvc)
         present(nav,animated: true)
@@ -258,17 +262,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
 }
 
-extension ProfileViewController: AvatarPickerDelegate {
-
-    func didSelectAvatar(_ imageName: String) {
-        guard let user = user else {
-            return
-        }
-
-        user.avatar = imageName  //user是class，是引用类型，所以能直接修改
-        avatar.image = UIImage(named: user.avatar)
-    }
-}
 
 #if canImport(SwiftUI)
 import SwiftUI

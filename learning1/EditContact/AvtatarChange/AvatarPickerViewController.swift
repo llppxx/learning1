@@ -9,12 +9,9 @@ import UIKit
 
 import SnapKit
 
-protocol AvatarPickerDelegate: AnyObject {
-    func didSelectAvatar(_ imageName: String)
-}
-
 class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UICollectionViewDataSource {
-    weak var delegate: AvatarPickerDelegate?  //跟Profile中changeAvatar函数changeAvatarvc.delegate = self对应，建立联系
+    
+    var onAvatarSelected: ((String)->Void)?
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -68,13 +65,18 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         cell.contentView.addSubview(imageView)
         return cell
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath ) {
         let avatarName = avatars[indexPath.item]
-        print("点击：\(avatarName)")
-        delegate?.didSelectAvatar(avatarName)
-        dismiss(animated: true)
+        selectAvatar(name: avatarName)
+    }
 
+    func selectAvatar(name:String){
+        print("Ap选择头像",name)
+        onAvatarSelected?(name)
+        dismiss(
+            animated: true
+        )
     }
     
     
