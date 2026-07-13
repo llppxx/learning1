@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  learning1
+
+  Created by Lipeixuan on 2026/7/13.
+  
+*/
+"home.navigation.title" = "Contacts";
+"home.search.placeholder" = "Search Contacts";
+"profile.button.follow" = "Follow +";
+"addcontact.navigation.title" = "Add Contact";
+"addcontact.name.placeholder" = "Please enter name";
+"addcontact.desc.placeholder" = "Please enter description";
+"addcontact.address.placeholder" = "Please enter address";
+"addcontact.navigation.save" = "Save";
+"addcontact.navigation.cancel" = "Cancel";
+"addcontact.desc.default" = "This person is too lazy to write anything...";
+"addcontact.address.default" = "Green Grassland";
+"avatarpicker.navigation.title" = "Change Avatar";

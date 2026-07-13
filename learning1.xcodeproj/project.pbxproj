@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		267A19F82FF3B6F900AE57D4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 267A19F72FF3B6F900AE57D4 /* SnapKit */; };
+		26C3E2853004783300C950F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26C3E2833004783300C950F1 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		267A19D92FF3B5E400AE57D4 /* learning1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = learning1.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		26C3E2843004783300C950F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		26C3E28830047A1D00C950F1 /* zh-Hans-CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans-CN"; path = "zh-Hans-CN.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -51,6 +54,7 @@
 			isa = PBXGroup;
 			children = (
 				267A19DB2FF3B5E400AE57D4 /* learning1 */,
+				26C3E2833004783300C950F1 /* Localizable.strings */,
 				267A19DA2FF3B5E400AE57D4 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -110,6 +114,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans-CN",
 			);
 			mainGroup = 267A19D02FF3B5E400AE57D4;
 			minimizedProjectReferenceProxies = 1;
@@ -131,6 +136,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26C3E2853004783300C950F1 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -145,6 +151,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		26C3E2833004783300C950F1 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				26C3E2843004783300C950F1 /* en */,
+				26C3E28830047A1D00C950F1 /* zh-Hans-CN */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		267A19ED2FF3B5E600AE57D4 /* Debug */ = {
@@ -214,6 +232,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -277,6 +296,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";

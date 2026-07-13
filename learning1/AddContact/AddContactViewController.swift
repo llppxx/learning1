@@ -26,7 +26,7 @@ class AddContactViewController: UIViewController {
     private lazy var nameTextField: UITextField = {
         
         let textField = UITextField()
-        textField.placeholder = "请输入姓名"
+        textField.placeholder = NSLocalizedString("addcontact.name.placeholder", comment: "")
         textField.borderStyle = .roundedRect
         
         return textField
@@ -36,7 +36,7 @@ class AddContactViewController: UIViewController {
     private lazy var descTextField: UITextField = {
         
         let textField = UITextField()
-        textField.placeholder = "请输入描述"
+        textField.placeholder = NSLocalizedString("addcontact.desc.placeholder", comment: "")
         textField.borderStyle = .roundedRect
         
         return textField
@@ -45,7 +45,7 @@ class AddContactViewController: UIViewController {
     private lazy var addressTextField: UITextField = {
         
         let textField = UITextField()
-        textField.placeholder = "请输入地址"
+        textField.placeholder = NSLocalizedString("addcontact.address.placeholder", comment: "")
         textField.borderStyle = .roundedRect
         
         return textField
@@ -56,7 +56,7 @@ class AddContactViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        title = "添加联系人"
+        title = NSLocalizedString("addcontact.navigation.title", comment: "")
         
         setupNavigationBar()
         setupViews()
@@ -78,7 +78,7 @@ class AddContactViewController: UIViewController {
         
         // 左侧取消按钮
         navigationItem.leftBarButtonItem = UIBarButtonItem(
-            title: "取消",
+            title: NSLocalizedString("addcontact.navigation.cancel", comment: ""),
             style: .plain,
             target: self,
             action: #selector(cancelAction)
@@ -86,7 +86,7 @@ class AddContactViewController: UIViewController {
 
         // 右侧保存按钮
         navigationItem.rightBarButtonItem = UIBarButtonItem(
-            title: "保存",
+            title: NSLocalizedString("addcontact.navigation.save", comment: ""),
             style: .done,
             target: self,
             action: #selector(saveAction)
@@ -137,11 +137,11 @@ class AddContactViewController: UIViewController {
         else { return }
         let  desc: String
         if let text = descTextField.text, !text.isEmpty{  desc = text  }
-        else{  desc = "这个人很懒，什么也没写..."  }
+        else{  desc = NSLocalizedString("addcontact.desc.default", comment: "")  }
             
         let  address: String
         if let text = addressTextField.text, !text.isEmpty{  address = text  }
-        else{  address = "青青草原"  }
+        else{  address = NSLocalizedString("addcontact.address.default", comment: "")  }
         
         let user = UserModel(
             name: name,

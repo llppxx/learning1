@@ -1,0 +1,19 @@
+/* 
+  Localizable.strings
+  learning1
+
+  Created by Lipeixuan on 2026/7/13.
+  
+*/
+"home.navigation.title" = "通讯录";
+"home.search.placeholder" = "搜索联系人";
+"profile.button.follow" = "关注 +";
+"addcontact.navigation.title" = "添加联系人";
+"addcontact.name.placeholder" = "请输入姓名";
+"addcontact.desc.placeholder" = "请输入简介";
+"addcontact.address.placeholder" = "请输入地址";
+"addcontact.navigation.save" = "保存";
+"addcontact.navigation.cancel" = "取消";
+"addcontact.desc.default" = "这个人很懒，什么也没写...";
+"addcontact.address.default" = "青青草原";
+"avatarpicker.navigatiob.title" = "更换头像";

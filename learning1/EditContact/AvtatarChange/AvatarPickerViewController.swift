@@ -34,7 +34,7 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(collectionView)
-        title = "更换头像"
+        title = NSLocalizedString("avatarpicker.navigatiob.title", comment: "")
         setupConstraints()
     }
     

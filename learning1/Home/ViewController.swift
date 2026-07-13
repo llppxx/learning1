@@ -13,7 +13,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "搜索联系人"
+        textField.placeholder = NSLocalizedString("home.search.placeholder", comment: "")
         textField.backgroundColor = .systemGray6
         textField.layer.cornerRadius = 10
         textField.clipsToBounds = true
@@ -36,7 +36,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        navigationItem.title = "通讯录"
+        navigationItem.title = NSLocalizedString("home.navigation.title", comment: "")
         setupAddButton()
         setupView()
         setupConstraints()

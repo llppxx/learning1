@@ -75,7 +75,8 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         
         let button = UIButton(type: .system)
         
-        button.setTitle("关注 +", for: .normal)
+        let title = NSLocalizedString("profile.button.follow",  comment: "")
+        button.setTitle(title, for: .normal)
         button.backgroundColor = .systemRed
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
