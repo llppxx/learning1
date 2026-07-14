@@ -81,8 +81,7 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
     
     
     private func setupConstraints(){
-        self.collectionView.snp.makeConstraints{
-            make in
+        self.collectionView.snp.makeConstraints{  make in
             make.center.equalToSuperview()
             make.width.equalTo(320)
             make.height.equalTo(400)

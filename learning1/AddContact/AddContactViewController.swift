@@ -89,15 +89,15 @@ class AddContactViewController: UIViewController {
             title: __("addcontact.navigation.save"),
             style: .done,
             target: self,
-            action: #selector(saveAction)
+            action: #selector(self.saveAction)
         )
         
     }
     
     private func setupViews(){
-        self.view.addSubview(nameTextField)
-        self.view.addSubview(descTextField)
-        self.view.addSubview(addressTextField)
+        self.view.addSubview(self.nameTextField)
+        self.view.addSubview(self.descTextField)
+        self.view.addSubview(self.addressTextField)
     }
     
     
@@ -105,7 +105,7 @@ class AddContactViewController: UIViewController {
         self.nameTextField.snp.makeConstraints { make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
                 .offset(50)
-            make.left.right.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
                 .inset(30)
             make.height.equalTo(50)
         }
@@ -113,7 +113,7 @@ class AddContactViewController: UIViewController {
         self.descTextField.snp.makeConstraints { make in
             make.top.equalTo(self.nameTextField.snp.bottom)
                 .offset(20)
-            make.left.right.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
                 .inset(30)
             make.height.equalTo(50)
         }
@@ -121,7 +121,7 @@ class AddContactViewController: UIViewController {
         self.addressTextField.snp.makeConstraints { make in
             make.top.equalTo(self.descTextField.snp.bottom)
                 .offset(20)
-            make.left.right.equalToSuperview()
+            make.leading.trailing.equalToSuperview()
                 .inset(30)
             make.height.equalTo(50)
         }

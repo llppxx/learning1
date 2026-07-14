@@ -144,54 +144,47 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     // MARK: - 设置布局
     private func setupConstraints(){
         self.backgroundImageView.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
+            make.top.leading.trailing.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
-        self.cardView.snp.makeConstraints {
-            make in
+        self.cardView.snp.makeConstraints {  make in
             make.top.equalTo(self.backgroundImageView.snp.bottom).offset(-40)
-            make.left.right.equalToSuperview().inset(16)
+            make.leading.trailing.equalToSuperview().inset(16)
         }
         
-        self.avatar.snp.makeConstraints {
-            make in
+        self.avatar.snp.makeConstraints {  make in
             make.top.equalTo(self.cardView).offset(20)
-            make.left.equalTo(self.cardView).offset(16)
+            make.leading.equalTo(self.cardView).offset(16)
             make.width.height.equalTo(100)
         }
         
-        self.nameField.snp.makeConstraints {
-            make in
+        self.nameField.snp.makeConstraints {  make in
             make.top.equalTo(self.avatar).offset(10)
-            make.left.equalTo(self.avatar.snp.right).offset(20)
+            make.leading.equalTo(self.avatar.snp.trailing).offset(20)
         }
         
-        self.phoneLabel.snp.makeConstraints {
-            make in
+        self.phoneLabel.snp.makeConstraints {  make in
             make.top.equalTo(self.nameField.snp.bottom).offset(30)
-            make.left.equalTo(self.nameField)
+            make.leading.equalTo(self.nameField)
         }
         
-        self.followButton.snp.makeConstraints {
-            make in
+        self.followButton.snp.makeConstraints {  make in
             make.centerY.equalTo(self.avatar)
-            make.right.equalTo(self.cardView).offset(-20)
+            make.trailing.equalTo(self.cardView).offset(-20)
             make.width.equalTo(80)
             make.height.equalTo(35)
         }
         
-        self.introLabel.snp.makeConstraints {
-            make in
+        self.introLabel.snp.makeConstraints {  make in
             make.top.equalTo(self.phoneLabel.snp.bottom).offset(20)
-            make.left.right.equalTo(self.cardView).inset(16)
+            make.leading.trailing.equalTo(self.cardView).inset(16)
             make.bottom.equalTo(self.cardView).offset(-20)
         }
         
-        self.backButton.snp.makeConstraints {
-            make in
+        self.backButton.snp.makeConstraints {  make in
             make.top.equalTo(self.view.safeAreaLayoutGuide)
-            make.left.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(16)
             make.width.height.equalTo(40)
         }
         

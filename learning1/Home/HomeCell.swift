@@ -43,18 +43,18 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
         self.contentView.addSubview(self.followImageView)
         
         self.avatar.snp.makeConstraints { make in
-            make.left.equalTo(16)
+            make.leading.equalTo(16)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(50)
         }
 
         self.nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(self.avatar.snp.right).offset(12)
+            make.leading.equalTo(self.avatar.snp.trailing).offset(12)
             make.centerY.equalToSuperview()
         }
         
         self.followImageView.snp.makeConstraints{ make in
-            make.right.equalToSuperview().offset(-20)
+            make.trailing.equalToSuperview().offset(-20)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(50)
         }

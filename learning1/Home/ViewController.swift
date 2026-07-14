@@ -99,7 +99,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     private func setupConstraints(){
         self.searchTextField.snp.makeConstraints{  make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
-            make.left.right.equalToSuperview().inset(40)
+            make.leading.trailing.equalToSuperview().inset(40)
             make.height.equalTo(40)
         }
         
