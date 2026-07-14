@@ -9,10 +9,12 @@ import UIKit
 
 import SnapKit
 
-class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UICollectionViewDataSource {
+class AvatarPickerViewController: UIViewController {
     
     var onAvatarSelected: ((String)->Void)?
+    let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt", "avatar6"] //数据
     
+    // MARK: 控件初始化
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
@@ -28,8 +30,7 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         return vc
     }()
     
-    let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt", "avatar6"] //数据
-    
+    // MARK: 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -43,12 +44,31 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         print("avatarChange出现啦~~~~")
     }
 
-
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         print("avatarChange消失啦~~~~")
     }
     
+    // MARK: UI搭建
+    private func setupConstraints(){
+        self.collectionView.snp.makeConstraints{  make in
+            make.center.equalToSuperview()
+            make.width.equalTo(320)
+            make.height.equalTo(400)
+        }
+    }
+    
+    // MARK: 业务逻辑
+    func selectAvatar(name:String){
+        print("Ap选择头像",name)
+        self.onAvatarSelected?(name)
+        dismiss(
+            animated: true
+        )
+    }
+}
+
+extension AvatarPickerViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
                 return avatars.count
         }
@@ -70,24 +90,6 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
         let avatarName = self.avatars[indexPath.item]
         self.selectAvatar(name: avatarName)
     }
-
-    func selectAvatar(name:String){
-        print("Ap选择头像",name)
-        self.onAvatarSelected?(name)
-        dismiss(
-            animated: true
-        )
-    }
-    
-    
-    private func setupConstraints(){
-        self.collectionView.snp.makeConstraints{  make in
-            make.center.equalToSuperview()
-            make.width.equalTo(320)
-            make.height.equalTo(400)
-        }
-    }
-    
 }
 
 

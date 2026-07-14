@@ -9,8 +9,11 @@ import UIKit
 
 import SnapKit
 
-class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDelegate  {
+class ViewController: UIViewController  {
     
+    var filteredUsers = contactList
+    
+    // MARK: 控件初始化
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = __("home.search.placeholder")
@@ -30,8 +33,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         return tableViews
     }()
     
-    var filteredUsers = contactList
-    
+    // MARK: 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -56,41 +58,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         print("主页消失啦")
     }
     
-    private func setupTextFiled(){
-        self.searchTextField.addTarget(self, action: #selector(searchTextChange), for: .editingChanged)
-    }
-    @objc private func searchTextChange(){
-        guard let text = self.searchTextField.text else {  return  }
-        if text.isEmpty { self.filteredUsers = contactList }
-        else {
-            self.filteredUsers = contactList.filter{
-                $0.name.contains(text)
-            }
-        }
-        self.tableViewSort()
-    }
-    
-    private func setupAddButton(){
-        //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
-        let addButton = UIBarButtonItem(barButtonSystemItem:  .add, target: self, action: #selector(addContact))
-        
-        self.navigationItem.rightBarButtonItem = addButton
-    }
-    @objc func addContact(){
-        
-        print("点击添加联系人按钮")
-        let addVC = AddContactViewController()
-        
-        addVC.delegate = self
-        let nav = ModalNavigationController(rootViewController: addVC)
-        
-        addVC.modalPresentationStyle = .pageSheet
-        self.present(
-            nav,
-            animated:true
-        )
-    }
-    
+    // MARK: UI搭建
     private func setupView(){
         self.view.addSubview(searchTextField)
         self.view.addSubview(tableView)
@@ -110,6 +78,38 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
             make.height.equalTo(500)
         }
     }
+    private func setupAddButton(){
+        //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
+        let addButton = UIBarButtonItem(barButtonSystemItem:  .add, target: self, action: #selector(addContact))
+        self.navigationItem.rightBarButtonItem = addButton
+    }
+    
+    // MARK: 业务逻辑
+    private func setupTextFiled(){
+        self.searchTextField.addTarget(self, action: #selector(searchTextChange), for: .editingChanged)
+    }
+    @objc private func searchTextChange(){
+        guard let text = self.searchTextField.text else {  return  }
+        if text.isEmpty { self.filteredUsers = contactList }
+        else {
+            self.filteredUsers = contactList.filter{
+                $0.name.contains(text)
+            }
+        }
+        self.tableViewSort()
+    }
+    
+    @objc func addContact(){
+        print("点击添加联系人按钮")
+        let addVC = AddContactViewController()
+        addVC.delegate = self
+        let nav = ModalNavigationController(rootViewController: addVC)
+        addVC.modalPresentationStyle = .pageSheet
+        self.present(
+            nav,
+            animated:true
+        )
+    }
     
     private func tableViewSort(){
         self.filteredUsers.sort{
@@ -120,6 +120,10 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         }
         self.tableView.reloadData()
     }
+    
+}
+
+extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     //UITableViewDataSource 协议，必须写
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -146,12 +150,11 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         return 80
     }
     
-    
 }
+
 extension ViewController: AddContactDelegate {
-
+    
     func didAddContact(_ user: UserModel) {
-
         contactList.append(user)
         self.filteredUsers = contactList
         self.tableViewSort()

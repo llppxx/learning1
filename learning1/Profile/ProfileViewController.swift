@@ -68,10 +68,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         button.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
         return button
     }()
-    @IBAction func followButtonTapped(_ sender: UIButton){
-        user?.isFollowed.toggle()
-        updateFollowButton()
-    }
     
     private lazy var introLabel: UILabel = {
         let label = UILabel()
@@ -97,10 +93,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         )
         return button
     }()
-    @objc private func backClick(){
-
-        self.navigationController?.popViewController(animated:true)
-    }
     
     
     // MARK: - 生命周期
@@ -128,7 +120,7 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
     
 
-    // MARK: - 加入视图
+    // MARK: - UI搭建
     private func setupViews() {
         self.view.addSubview(self.backgroundImageView)
         self.view.addSubview(self.cardView)
@@ -140,8 +132,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         self.cardView.addSubview(self.introLabel)
     }
 
-    
-    // MARK: - 设置布局
     private func setupConstraints(){
         self.backgroundImageView.snp.makeConstraints { make in
             make.top.leading.trailing.equalToSuperview()
@@ -204,6 +194,21 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         self.updateFollowButton()
     }
     
+    private func updateFollowButton(){
+        guard let user = self.user else { return }
+        if user.isFollowed{
+            let title = __("profile.button.followed")
+            self.followButton.setTitle(title, for: .normal)
+            self.followButton.backgroundColor = .systemGray
+        }
+        else{
+            let title = __("profile.button.follow")
+            self.followButton.setTitle(title, for: .normal)
+            self.followButton.backgroundColor = .systemRed
+        }
+    }
+    
+    // MARK: - 业务逻辑
     private func addAvatarGesture(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeAvatar))
         self.avatar.addGestureRecognizer(tap)
@@ -231,18 +236,14 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         return true
     }
     
-    private func updateFollowButton(){
-        guard let user = self.user else { return }
-        if user.isFollowed{
-            let title = __("profile.button.followed")
-            self.followButton.setTitle(title, for: .normal)
-            self.followButton.backgroundColor = .systemGray
-        }
-        else{
-            let title = __("profile.button.follow")
-            self.followButton.setTitle(title, for: .normal)
-            self.followButton.backgroundColor = .systemRed
-        }
+    @objc private func backClick(){
+
+        self.navigationController?.popViewController(animated:true)
+    }
+    
+    @IBAction func followButtonTapped(_ sender: UIButton){
+        user?.isFollowed.toggle()
+        updateFollowButton()
     }
 }
 
