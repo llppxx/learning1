@@ -8,6 +8,7 @@
 "home.navigation.title" = "Contacts";
 "home.search.placeholder" = "Search Contacts";
 "profile.button.follow" = "Follow +";
+"profile.button.follow" = "Followed";
 "addcontact.navigation.title" = "Add Contact";
 "addcontact.name.placeholder" = "Please enter name";
 "addcontact.desc.placeholder" = "Please enter description";

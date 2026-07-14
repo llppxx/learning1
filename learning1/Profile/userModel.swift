@@ -11,11 +11,13 @@ class UserModel {
     var avatar: String
     let desc: String
     let address: String
+    var isFollowed: Bool
     init(name: String, avatar: String, desc: String, address: String) {
         self.name = name
         self.avatar = avatar
         self.desc = desc
         self.address = address
+        self.isFollowed = false
     }
 }
 

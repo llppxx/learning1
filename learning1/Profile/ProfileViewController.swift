@@ -13,20 +13,16 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     
     // MARK: - 初始化控件
     private lazy var backgroundImageView: UIImageView = {
-        
         let imageView = UIImageView()
-        
         imageView.image = UIImage(named: "image_background")
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
-        
         return imageView
         
     }()
     
     private lazy var cardView:UIView = {
         let card = UIView()
-        
         card.backgroundColor = .white
         card.layer.cornerRadius = 20
         card.layer.shadowColor = UIColor.black.cgColor
@@ -37,79 +33,63 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     
     private lazy var avatar:UIImageView = {
         let avatarView = UIImageView()
-        
         avatarView.contentMode = .scaleAspectFill
         avatarView.clipsToBounds = true
         avatarView.layer.cornerRadius = 50
-        avatarView.isUserInteractionEnabled = true  //允许点击交互
+        avatarView.isUserInteractionEnabled = true//允许点击交互
         return avatarView
     }()
     
     private lazy var nameField: UITextField = {
-        
         let textField = UITextField()
-        
         textField.font = .systemFont(ofSize: 18)
         textField.textColor = .black
         textField.borderStyle = .roundedRect
         textField.keyboardType = .default
         textField.returnKeyType = .done
         textField.delegate = self
-        
         return textField
         
     }()
     
     private lazy var phoneLabel: UILabel = {
-        
         let label = UILabel()
-        
         label.font = .systemFont(ofSize: 14)
         label.textColor = .gray
-        
         return label
-        
     }()
     
     private lazy var followButton: UIButton = {
-        
         let button = UIButton(type: .system)
-        
-        let title = NSLocalizedString("profile.button.follow",  comment: "")
-        button.setTitle(title, for: .normal)
         button.backgroundColor = .systemRed
         button.setTitleColor(.white, for: .normal)
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
-        
+        button.addTarget(self, action: #selector(followButtonTapped), for: .touchUpInside)
         return button
-        
     }()
+    @IBAction func followButtonTapped(_ sender: UIButton){
+        user?.isFollowed.toggle()
+        updateFollowButton()
+    }
     
     private lazy var introLabel: UILabel = {
-        
         let label = UILabel()
-        
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
         label.numberOfLines = 0
-        
         return label
-        
     }()
     
     private lazy var backButton: UIButton = {
-
         let button = UIButton(type: .system)
         button.setImage(
             UIImage(systemName:"chevron.left"),
             for:.normal
         )
-        
         button.tintColor = .black
         button.backgroundColor = .white
         button.layer.cornerRadius = 20
-
         button.addTarget(
             self,
             action:#selector(backClick),
@@ -128,7 +108,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         super.viewDidLoad()
         view.backgroundColor = .white
         navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        
         setupViews()
         setupConstraints()
         setupData()
@@ -151,23 +130,19 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
 
     // MARK: - 加入视图
     private func setupViews() {
-        
         view.addSubview(backgroundImageView)
         view.addSubview(cardView)
         view.addSubview(backButton)
-        
         cardView.addSubview(avatar)
         cardView.addSubview(nameField)
         cardView.addSubview(phoneLabel)
         cardView.addSubview(followButton)
         cardView.addSubview(introLabel)
-        
     }
 
     
     // MARK: - 设置布局
     private func setupConstraints(){
-        
         backgroundImageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.33)
@@ -206,7 +181,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
             make.top.equalTo(phoneLabel.snp.bottom).offset(20)
             make.left.right.equalTo(cardView).inset(16)
             make.bottom.equalTo(cardView).offset(-20)
-
         }
         
         backButton.snp.makeConstraints { make in
@@ -214,14 +188,12 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
             make.top.equalTo(view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(16)
             make.width.height.equalTo(40)
-
         }
         
     }
     
     // MARK: - 设置控件数据
     private func setupData(){
-        
         guard let user = user else {
             return
         }
@@ -231,11 +203,10 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         nameField.text = user.name
         phoneLabel.text = ProfileAddress
         introLabel.text = user.desc
-        
+        updateFollowButton()
     }
     
     private func addAvatarGesture(){
-        
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeAvatar))
         avatar.addGestureRecognizer(tap)
     }
@@ -260,6 +231,20 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
             if let text = textField.text, !text.isEmpty{ user.name = text }
         }
         return true
+    }
+    
+    private func updateFollowButton(){
+        guard let user = user else { return }
+        if user.isFollowed{
+            let title = __("profile.button.followed")
+            followButton.setTitle(title, for: .normal)
+            followButton.backgroundColor = .systemGray
+        }
+        else{
+            let title = __("profile.button.follow")
+            followButton.setTitle(title, for: .normal)
+            followButton.backgroundColor = .systemRed
+        }
     }
 }
 

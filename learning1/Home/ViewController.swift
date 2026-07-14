@@ -13,7 +13,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = NSLocalizedString("home.search.placeholder", comment: "")
+        textField.placeholder = __("home.search.placeholder")
         textField.backgroundColor = .systemGray6
         textField.layer.cornerRadius = 10
         textField.clipsToBounds = true
@@ -36,7 +36,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         super.viewDidLoad()
         view.backgroundColor = .white
 
-        navigationItem.title = NSLocalizedString("home.navigation.title", comment: "")
+        navigationItem.title = __("home.navigation.title")
         setupAddButton()
         setupView()
         setupConstraints()
@@ -46,7 +46,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+        tableViewSort()
         print("主页出现啦")
     }
     
@@ -67,7 +67,7 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
                 $0.name.contains(text)
             }
         }
-        tableView.reloadData()
+        tableViewSort()
     }
     
     private func setupAddButton(){
@@ -97,7 +97,6 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     }
     
     private func setupConstraints(){
-        
         searchTextField.snp.makeConstraints{  make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.left.right.equalToSuperview().inset(40)
@@ -110,8 +109,18 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
             make.width.equalTo(300)
             make.height.equalTo(500)
         }
-        
     }
+    
+    private func tableViewSort(){
+        filteredUsers.sort{
+            if $0.isFollowed != $1.isFollowed{
+                return $0.isFollowed && !$1.isFollowed
+            }
+            return $0.name < $1.name
+        }
+        tableView.reloadData()
+    }
+    
     //UITableViewDataSource 协议，必须写
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredUsers.count
@@ -145,7 +154,7 @@ extension ViewController: AddContactDelegate {
 
         contactList.append(user)
         filteredUsers = contactList
-        tableView.reloadData()
+        tableViewSort()
     }
 }
 

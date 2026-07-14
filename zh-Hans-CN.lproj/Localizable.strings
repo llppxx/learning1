@@ -8,6 +8,7 @@
 "home.navigation.title" = "通讯录";
 "home.search.placeholder" = "搜索联系人";
 "profile.button.follow" = "关注 +";
+"profile.button.followed" = "已关注";
 "addcontact.navigation.title" = "添加联系人";
 "addcontact.name.placeholder" = "请输入姓名";
 "addcontact.desc.placeholder" = "请输入简介";
