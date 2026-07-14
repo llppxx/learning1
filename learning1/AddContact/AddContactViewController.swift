@@ -55,12 +55,12 @@ class AddContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
-        title = __("addcontact.navigation.title")
+        self.view.backgroundColor = .white
+        self.title = __("addcontact.navigation.title")
         
-        setupNavigationBar()
-        setupViews()
-        setupUI()
+        self.setupNavigationBar()
+        self.setupViews()
+        self.setupUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -77,7 +77,7 @@ class AddContactViewController: UIViewController {
     private func setupNavigationBar(){
         
         // 左侧取消按钮
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(
             title: __("addcontact.navigation.cancel"),
             style: .plain,
             target: self,
@@ -85,7 +85,7 @@ class AddContactViewController: UIViewController {
         )
 
         // 右侧保存按钮
-        navigationItem.rightBarButtonItem = UIBarButtonItem(
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(
             title: __("addcontact.navigation.save"),
             style: .done,
             target: self,
@@ -95,33 +95,31 @@ class AddContactViewController: UIViewController {
     }
     
     private func setupViews(){
-        
-        view.addSubview(nameTextField)
-        view.addSubview(descTextField)
-        view.addSubview(addressTextField)
+        self.view.addSubview(nameTextField)
+        self.view.addSubview(descTextField)
+        self.view.addSubview(addressTextField)
     }
     
     
     private func setupUI(){
-        
-        nameTextField.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+        self.nameTextField.snp.makeConstraints { make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
                 .offset(50)
             make.left.right.equalToSuperview()
                 .inset(30)
             make.height.equalTo(50)
         }
         
-        descTextField.snp.makeConstraints { make in
-            make.top.equalTo(nameTextField.snp.bottom)
+        self.descTextField.snp.makeConstraints { make in
+            make.top.equalTo(self.nameTextField.snp.bottom)
                 .offset(20)
             make.left.right.equalToSuperview()
                 .inset(30)
             make.height.equalTo(50)
         }
         
-        addressTextField.snp.makeConstraints { make in
-            make.top.equalTo(descTextField.snp.bottom)
+        self.addressTextField.snp.makeConstraints { make in
+            make.top.equalTo(self.descTextField.snp.bottom)
                 .offset(20)
             make.left.right.equalToSuperview()
                 .inset(30)
@@ -132,15 +130,15 @@ class AddContactViewController: UIViewController {
 
     @objc private func saveAction(){
 
-        guard let name = nameTextField.text,
+        guard let name = self.nameTextField.text,
               !name.isEmpty
         else { return }
         let  desc: String
-        if let text = descTextField.text, !text.isEmpty{  desc = text  }
+        if let text = self.descTextField.text, !text.isEmpty{  desc = text  }
         else{  desc = __("addcontact.desc.default")  }
             
         let  address: String
-        if let text = addressTextField.text, !text.isEmpty{  address = text  }
+        if let text = self.addressTextField.text, !text.isEmpty{  address = text  }
         else{  address = __("addcontact.address.default") }
         
         let user = UserModel(
@@ -150,7 +148,7 @@ class AddContactViewController: UIViewController {
             address: address
         )
         
-        delegate?.didAddContact(user)
+        self.delegate?.didAddContact(user)
         dismiss(animated: true)
     }
     

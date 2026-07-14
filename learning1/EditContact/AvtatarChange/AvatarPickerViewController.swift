@@ -32,10 +32,10 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        view.addSubview(collectionView)
-        title = __("avatarpicker.navigatiob.title")
-        setupConstraints()
+        self.view.backgroundColor = .white
+        self.view.addSubview(collectionView)
+        self.title = __("avatarpicker.navigatiob.title")
+        self.setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -67,13 +67,13 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath ) {
-        let avatarName = avatars[indexPath.item]
-        selectAvatar(name: avatarName)
+        let avatarName = self.avatars[indexPath.item]
+        self.selectAvatar(name: avatarName)
     }
 
     func selectAvatar(name:String){
         print("Ap选择头像",name)
-        onAvatarSelected?(name)
+        self.onAvatarSelected?(name)
         dismiss(
             animated: true
         )
@@ -81,7 +81,8 @@ class AvatarPickerViewController: UIViewController ,UICollectionViewDelegate, UI
     
     
     private func setupConstraints(){
-        collectionView.snp.makeConstraints{  make in
+        self.collectionView.snp.makeConstraints{
+            make in
             make.center.equalToSuperview()
             make.width.equalTo(320)
             make.height.equalTo(400)

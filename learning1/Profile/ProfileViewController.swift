@@ -99,93 +99,98 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }()
     @objc private func backClick(){
 
-        navigationController?.popViewController(animated:true)
+        self.navigationController?.popViewController(animated:true)
     }
     
     
     // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
-        navigationController?.interactivePopGestureRecognizer?.delegate = nil
-        setupViews()
-        setupConstraints()
-        setupData()
-        addAvatarGesture()
+        self.view.backgroundColor = .white
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
+        self.setupViews()
+        self.setupConstraints()
+        self.setupData()
+        self.addAvatarGesture()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        navigationController?.setNavigationBarHidden(true, animated: true)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
         print("profile出现")
     }
 
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         print("profile消失")
     }
     
 
     // MARK: - 加入视图
     private func setupViews() {
-        view.addSubview(backgroundImageView)
-        view.addSubview(cardView)
-        view.addSubview(backButton)
-        cardView.addSubview(avatar)
-        cardView.addSubview(nameField)
-        cardView.addSubview(phoneLabel)
-        cardView.addSubview(followButton)
-        cardView.addSubview(introLabel)
+        self.view.addSubview(self.backgroundImageView)
+        self.view.addSubview(self.cardView)
+        self.view.addSubview(self.backButton)
+        self.cardView.addSubview(self.avatar)
+        self.cardView.addSubview(self.nameField)
+        self.cardView.addSubview(self.phoneLabel)
+        self.cardView.addSubview(self.followButton)
+        self.cardView.addSubview(self.introLabel)
     }
 
     
     // MARK: - 设置布局
     private func setupConstraints(){
-        backgroundImageView.snp.makeConstraints { make in
+        self.backgroundImageView.snp.makeConstraints { make in
             make.top.left.right.equalToSuperview()
             make.height.equalToSuperview().multipliedBy(0.33)
         }
         
-        cardView.snp.makeConstraints { make in
-            make.top.equalTo(backgroundImageView.snp.bottom).offset(-40)
+        self.cardView.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.backgroundImageView.snp.bottom).offset(-40)
             make.left.right.equalToSuperview().inset(16)
         }
         
-        avatar.snp.makeConstraints { make in
-            make.top.equalTo(cardView).offset(20)
-            make.left.equalTo(cardView).offset(16)
+        self.avatar.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.cardView).offset(20)
+            make.left.equalTo(self.cardView).offset(16)
             make.width.height.equalTo(100)
         }
         
-        nameField.snp.makeConstraints { make in
-            make.top.equalTo(avatar).offset(10)
-            make.left.equalTo(avatar.snp.right).offset(20)
+        self.nameField.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.avatar).offset(10)
+            make.left.equalTo(self.avatar.snp.right).offset(20)
         }
         
-        phoneLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameField.snp.bottom).offset(30)
-            make.left.equalTo(nameField)
+        self.phoneLabel.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.nameField.snp.bottom).offset(30)
+            make.left.equalTo(self.nameField)
         }
         
-        followButton.snp.makeConstraints { make in
-            make.centerY.equalTo(avatar)
-            make.right.equalTo(cardView).offset(-20)
+        self.followButton.snp.makeConstraints {
+            make in
+            make.centerY.equalTo(self.avatar)
+            make.right.equalTo(self.cardView).offset(-20)
             make.width.equalTo(80)
             make.height.equalTo(35)
         }
         
-        introLabel.snp.makeConstraints { make in
-            
-            make.top.equalTo(phoneLabel.snp.bottom).offset(20)
-            make.left.right.equalTo(cardView).inset(16)
-            make.bottom.equalTo(cardView).offset(-20)
+        self.introLabel.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.phoneLabel.snp.bottom).offset(20)
+            make.left.right.equalTo(self.cardView).inset(16)
+            make.bottom.equalTo(self.cardView).offset(-20)
         }
         
-        backButton.snp.makeConstraints { make in
-        
-            make.top.equalTo(view.safeAreaLayoutGuide)
+        self.backButton.snp.makeConstraints {
+            make in
+            make.top.equalTo(self.view.safeAreaLayoutGuide)
             make.left.equalToSuperview().offset(16)
             make.width.height.equalTo(40)
         }
@@ -194,21 +199,21 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     
     // MARK: - 设置控件数据
     private func setupData(){
-        guard let user = user else {
+        guard let user = self.user else {
             return
         }
         let ss:String = "ip "
         let ProfileAddress = ss + user.address
-        avatar.image = UIImage(named:user.avatar)
-        nameField.text = user.name
-        phoneLabel.text = ProfileAddress
-        introLabel.text = user.desc
-        updateFollowButton()
+        self.avatar.image = UIImage(named:user.avatar)
+        self.nameField.text = user.name
+        self.phoneLabel.text = ProfileAddress
+        self.introLabel.text = user.desc
+        self.updateFollowButton()
     }
     
     private func addAvatarGesture(){
         let tap = UITapGestureRecognizer(target: self, action: #selector(changeAvatar))
-        avatar.addGestureRecognizer(tap)
+        self.avatar.addGestureRecognizer(tap)
     }
     @objc private func changeAvatar(){
         
@@ -224,8 +229,8 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == nameField{
-            guard let user = user else{
+        if textField == self.nameField{
+            guard let user = self.user else{
                 return true
             }
             if let text = textField.text, !text.isEmpty{ user.name = text }
@@ -234,16 +239,16 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
     
     private func updateFollowButton(){
-        guard let user = user else { return }
+        guard let user = self.user else { return }
         if user.isFollowed{
             let title = __("profile.button.followed")
-            followButton.setTitle(title, for: .normal)
-            followButton.backgroundColor = .systemGray
+            self.followButton.setTitle(title, for: .normal)
+            self.followButton.backgroundColor = .systemGray
         }
         else{
             let title = __("profile.button.follow")
-            followButton.setTitle(title, for: .normal)
-            followButton.backgroundColor = .systemRed
+            self.followButton.setTitle(title, for: .normal)
+            self.followButton.backgroundColor = .systemRed
         }
     }
 }

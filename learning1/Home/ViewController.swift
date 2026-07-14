@@ -34,19 +34,19 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        self.view.backgroundColor = .white
 
-        navigationItem.title = __("home.navigation.title")
-        setupAddButton()
-        setupView()
-        setupConstraints()
-        setupTextFiled()
+        self.navigationItem.title = __("home.navigation.title")
+        self.setupAddButton()
+        self.setupView()
+        self.setupConstraints()
+        self.setupTextFiled()
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableViewSort()
+        self.tableViewSort()
         print("主页出现啦")
     }
     
@@ -57,24 +57,24 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     }
     
     private func setupTextFiled(){
-        searchTextField.addTarget(self, action: #selector(searchTextChange), for: .editingChanged)
+        self.searchTextField.addTarget(self, action: #selector(searchTextChange), for: .editingChanged)
     }
     @objc private func searchTextChange(){
-        guard let text = searchTextField.text else {  return  }
-        if text.isEmpty { filteredUsers = contactList }
+        guard let text = self.searchTextField.text else {  return  }
+        if text.isEmpty { self.filteredUsers = contactList }
         else {
-            filteredUsers = contactList.filter{
+            self.filteredUsers = contactList.filter{
                 $0.name.contains(text)
             }
         }
-        tableViewSort()
+        self.tableViewSort()
     }
     
     private func setupAddButton(){
         //系统自动在右上角生成+号，点击后通知当前页面，并调用addContact函数
         let addButton = UIBarButtonItem(barButtonSystemItem:  .add, target: self, action: #selector(addContact))
         
-        navigationItem.rightBarButtonItem = addButton
+        self.navigationItem.rightBarButtonItem = addButton
     }
     @objc func addContact(){
         
@@ -85,25 +85,25 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
         let nav = ModalNavigationController(rootViewController: addVC)
         
         addVC.modalPresentationStyle = .pageSheet
-        present(
+        self.present(
             nav,
             animated:true
         )
     }
     
     private func setupView(){
-        view.addSubview(searchTextField)
-        view.addSubview(tableView)
+        self.view.addSubview(searchTextField)
+        self.view.addSubview(tableView)
     }
     
     private func setupConstraints(){
-        searchTextField.snp.makeConstraints{  make in
+        self.searchTextField.snp.makeConstraints{  make in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(20)
             make.left.right.equalToSuperview().inset(40)
             make.height.equalTo(40)
         }
         
-        tableView.snp.makeConstraints { make in
+        self.tableView.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).offset(80)
             make.width.equalTo(300)
@@ -112,24 +112,24 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     }
     
     private func tableViewSort(){
-        filteredUsers.sort{
+        self.filteredUsers.sort{
             if $0.isFollowed != $1.isFollowed{
                 return $0.isFollowed && !$1.isFollowed
             }
             return $0.name < $1.name
         }
-        tableView.reloadData()
+        self.tableView.reloadData()
     }
     
     //UITableViewDataSource 协议，必须写
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredUsers.count
+        return self.filteredUsers.count
     }
     func tableView(_ tableView: UITableView,
                    cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! ProfileCell
         
-        let model = filteredUsers[indexPath.row]
+        let model = self.filteredUsers[indexPath.row]
 
         cell.configure(model: model)
         return cell
@@ -137,10 +137,10 @@ class ViewController: UIViewController , UITableViewDataSource ,  UITableViewDel
     
     //UITableViewDelegate协议，规定怎么交互
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let user = filteredUsers[indexPath.row]
+        let user = self.filteredUsers[indexPath.row]
         let vc = ProfileViewController()
         vc.user = user
-        navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 80
@@ -153,8 +153,8 @@ extension ViewController: AddContactDelegate {
     func didAddContact(_ user: UserModel) {
 
         contactList.append(user)
-        filteredUsers = contactList
-        tableViewSort()
+        self.filteredUsers = contactList
+        self.tableViewSort()
     }
 }
 

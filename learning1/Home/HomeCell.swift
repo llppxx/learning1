@@ -30,7 +30,7 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        self.setupUI()
     }
     required init?(coder: NSCoder) {  //必须写，swift强制
         fatalError("init(coder:) has not been implemented")
@@ -38,22 +38,22 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
     private func setupUI() {  //ui布局
         
-        contentView.addSubview(avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
-        contentView.addSubview(nameLabel)
-        contentView.addSubview(followImageView)
+        self.contentView.addSubview(self.avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
+        self.contentView.addSubview(self.nameLabel)
+        self.contentView.addSubview(self.followImageView)
         
-        avatar.snp.makeConstraints { make in
+        self.avatar.snp.makeConstraints { make in
             make.left.equalTo(16)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(50)
         }
 
-        nameLabel.snp.makeConstraints { make in
-            make.left.equalTo(avatar.snp.right).offset(12)
+        self.nameLabel.snp.makeConstraints { make in
+            make.left.equalTo(self.avatar.snp.right).offset(12)
             make.centerY.equalToSuperview()
         }
         
-        followImageView.snp.makeConstraints{ make in
+        self.followImageView.snp.makeConstraints{ make in
             make.right.equalToSuperview().offset(-20)
             make.centerY.equalToSuperview()
             make.width.height.equalTo(50)
@@ -62,8 +62,8 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     }
     
     func configure(model: UserModel) {
-        nameLabel.text = model.name
-        avatar.image = UIImage(named: model.avatar)
-        followImageView.isHidden = !model.isFollowed
+        self.nameLabel.text = model.name
+        self.avatar.image = UIImage(named: model.avatar)
+        self.followImageView.isHidden = !model.isFollowed
     }
 }

@@ -30,8 +30,8 @@
             filePath = "learning1/Profile/ProfileViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "201"
-            endingLineNumber = "201"
+            startingLineNumber = "206"
+            endingLineNumber = "206"
             landmarkName = "setupData()"
             landmarkType = "7">
          </BreakpointContent>
