@@ -13,7 +13,7 @@ class ViewController: UIViewController  {
     
     var filteredUsers = contactList
     
-    // MARK: 控件初始化
+    // MARK: - 控件初始化
     private lazy var searchTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = __("home.search.placeholder")
@@ -33,7 +33,7 @@ class ViewController: UIViewController  {
         return tableViews
     }()
     
-    // MARK: 生命周期
+    // MARK:  - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -58,7 +58,7 @@ class ViewController: UIViewController  {
         print("主页消失啦")
     }
     
-    // MARK: UI搭建
+    // MARK:  - UI搭建
     private func setupView(){
         self.view.addSubview(searchTextField)
         self.view.addSubview(tableView)
@@ -84,7 +84,7 @@ class ViewController: UIViewController  {
         self.navigationItem.rightBarButtonItem = addButton
     }
     
-    // MARK: 业务逻辑
+    // MARK: - 业务逻辑
     private func setupTextFiled(){
         self.searchTextField.addTarget(self, action: #selector(searchTextChange), for: .editingChanged)
     }
@@ -123,6 +123,7 @@ class ViewController: UIViewController  {
     
 }
 
+// MARK: - 列表协议实现
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
     //UITableViewDataSource 协议，必须写
@@ -152,6 +153,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
+// MARK: - 添加联系人协议实现
 extension ViewController: AddContactDelegate {
     
     func didAddContact(_ user: UserModel) {

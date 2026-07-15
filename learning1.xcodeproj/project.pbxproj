@@ -9,14 +9,12 @@
 /* Begin PBXBuildFile section */
 		267A19F82FF3B6F900AE57D4 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 267A19F72FF3B6F900AE57D4 /* SnapKit */; };
 		26C3E2853004783300C950F1 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 26C3E2833004783300C950F1 /* Localizable.strings */; };
-		26C3E2903006215B00C950F1 /* UserModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 26C3E28E3006215B00C950F1 /* UserModel.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		267A19D92FF3B5E400AE57D4 /* learning1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = learning1.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		26C3E2843004783300C950F1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		26C3E28830047A1D00C950F1 /* zh-Hans-CN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans-CN"; path = "zh-Hans-CN.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		26C3E28F3006215B00C950F1 /* UserModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UserModel.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -55,7 +53,6 @@
 		267A19D02FF3B5E400AE57D4 = {
 			isa = PBXGroup;
 			children = (
-				26C3E28E3006215B00C950F1 /* UserModel.xcdatamodeld */,
 				267A19DB2FF3B5E400AE57D4 /* learning1 */,
 				26C3E2833004783300C950F1 /* Localizable.strings */,
 				267A19DA2FF3B5E400AE57D4 /* Products */,
@@ -150,7 +147,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26C3E2903006215B00C950F1 /* UserModel.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,19 +389,6 @@
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		26C3E28E3006215B00C950F1 /* UserModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				26C3E28F3006215B00C950F1 /* UserModel.xcdatamodel */,
-			);
-			currentVersion = 26C3E28F3006215B00C950F1 /* UserModel.xcdatamodel */;
-			path = UserModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 267A19D12FF3B5E400AE57D4 /* Project object */;
 }

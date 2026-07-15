@@ -9,7 +9,7 @@ import SnapKit
 
 class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
     
-    // MARK: 控件初始化
+    // MARK: - 控件初始化
     private lazy var avatar: UIImageView = {
         let avatarView = UIImageView()
         return avatarView
@@ -28,7 +28,7 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
         return imageView
     }()
     
-    // MARK: 生命周期
+    // MARK: - 生命周期
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {  //初始化布局
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.setupUI()
@@ -37,7 +37,7 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: UI搭建
+    // MARK: - UI搭建
     private func setupUI() {  //ui布局
         
         self.contentView.addSubview(self.avatar)  // UITableViewCell 里面专门用来放 UI 的“容器视图”,类似View
@@ -63,7 +63,7 @@ class ProfileCell: UITableViewCell {  //创建列表自定义cell子类
         
     }
     
-    // MARK: 接收数据
+    // MARK: - 接收数据
     func configure(model: UserModel) {
         self.nameLabel.text = model.name
         self.avatar.image = UIImage(named: model.avatar)

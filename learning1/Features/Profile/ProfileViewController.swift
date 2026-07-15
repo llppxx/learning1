@@ -237,7 +237,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
     
     @objc private func backClick(){
-
         self.navigationController?.popViewController(animated:true)
     }
     

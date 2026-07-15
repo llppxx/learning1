@@ -14,7 +14,7 @@ class AvatarPickerViewController: UIViewController {
     var onAvatarSelected: ((String)->Void)?
     let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt", "avatar6"] //数据
     
-    // MARK: 控件初始化
+    // MARK: - 控件初始化
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
@@ -30,7 +30,7 @@ class AvatarPickerViewController: UIViewController {
         return vc
     }()
     
-    // MARK: 生命周期
+    // MARK: - 生命周期
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .white
@@ -49,7 +49,7 @@ class AvatarPickerViewController: UIViewController {
         print("avatarChange消失啦~~~~")
     }
     
-    // MARK: UI搭建
+    // MARK: - UI搭建
     private func setupConstraints(){
         self.collectionView.snp.makeConstraints{  make in
             make.center.equalToSuperview()
@@ -58,7 +58,7 @@ class AvatarPickerViewController: UIViewController {
         }
     }
     
-    // MARK: 业务逻辑
+    // MARK: - 业务逻辑
     func selectAvatar(name:String){
         print("Ap选择头像",name)
         self.onAvatarSelected?(name)
@@ -68,6 +68,7 @@ class AvatarPickerViewController: UIViewController {
     }
 }
 
+// MARK: - 网格布局协议实现
 extension AvatarPickerViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
                 return avatars.count
