@@ -7,7 +7,7 @@
 import UIKit
 import SnapKit
 
-class ProfileViewController: UIViewController ,UITextFieldDelegate{
+class ProfileViewController: UIViewController {
     
     var user: UserModel?
     
@@ -226,16 +226,6 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
         present(nav,animated: true)
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == self.nameField{
-            guard let user = self.user else{
-                return true
-            }
-            if let text = textField.text, !text.isEmpty{ user.name = text }
-        }
-        return true
-    }
-    
     @objc private func backClick(){
         self.navigationController?.popViewController(animated:true)
     }
@@ -246,6 +236,19 @@ class ProfileViewController: UIViewController ,UITextFieldDelegate{
     }
 }
 
+// MARK: - 输入框交互协议
+extension ProfileViewController:   UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.nameField{
+            guard let user = self.user else{
+                return true
+            }
+            if let text = textField.text, !text.isEmpty{ user.name = text }
+        }
+        return true
+    }
+}
 
 #if canImport(SwiftUI)
 import SwiftUI

@@ -17,4 +17,4 @@
 "addcontact.navigation.cancel" = "取消";
 "addcontact.desc.default" = "这个人很懒，什么也没写...";
 "addcontact.address.default" = "青青草原";
-"avatarpicker.navigatiob.title" = "更换头像";
+"avatarpicker.navigation.title" = "更换头像";

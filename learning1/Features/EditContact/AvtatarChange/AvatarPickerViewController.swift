@@ -15,17 +15,19 @@ class AvatarPickerViewController: UIViewController {
     let avatars = ["avatar1", "avatar2", "avatar3", "avatar4", "avatar5", "avatar_defualt", "avatar6"] //数据
     
     // MARK: - 控件初始化
-    private lazy var collectionView: UICollectionView = {
+    private lazy var layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSize(width: 100, height: 100)
         layout.minimumLineSpacing = 10
         layout.minimumInteritemSpacing = 10
-        
+        return layout
+    }()
+    
+    private lazy var collectionView: UICollectionView = {
         let vc = UICollectionView(frame: .zero, collectionViewLayout: layout)
         vc.backgroundColor = .white
         vc.dataSource = self
         vc.delegate = self
-        
         vc.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return vc
     }()
@@ -35,7 +37,7 @@ class AvatarPickerViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = .white
         self.view.addSubview(collectionView)
-        self.title = __("avatarpicker.navigatiob.title")
+        self.title = __("avatarpicker.navigation.title")
         self.setupConstraints()
     }
     
@@ -76,6 +78,7 @@ extension AvatarPickerViewController: UICollectionViewDelegate, UICollectionView
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)  //复用cell，不用重复创建
+        cell.contentView.subviews.forEach { $0.removeFromSuperview() }
         let imageView = UIImageView(
                 image: UIImage(named: avatars[indexPath.item])
             )
